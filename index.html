@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,71 +10,66 @@
 :root{--bg:#f5f6fb;--ink:#192039;--muted:#70788d;--purple:#5947ed;--line:#e2e5ef}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,Arial,sans-serif}
-header{background:#17152f;color:white;padding:20px 16px 27px}
+header{background:#17152f;color:white;padding:19px 15px 25px}
 nav,.wrap{max-width:850px;margin:auto}
-nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+nav{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .logo{font-size:21px;font-weight:850}.logo span{color:#aaa0ff}
-.status{font-size:11px;border:1px solid #56516e;border-radius:25px;padding:7px 9px}
+.status{font-size:10px;border:1px solid #56516e;border-radius:25px;padding:7px 8px}
 .hero{margin-top:25px}.eyebrow,.tag{font-size:11px;font-weight:800;letter-spacing:1px;color:#7564f5}
 .hero .eyebrow{color:#b8b0ff}
 h1{font-size:clamp(32px,8vw,45px);line-height:1.1;margin:9px 0}
 .hero p{color:#d1cee4;line-height:1.6;font-size:14px}
-.wrap{padding:18px 13px 35px}
+.wrap{padding:17px 12px 35px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.stat,.card,.challenge{background:white;border:1px solid var(--line);border-radius:14px}
-.stat{text-align:center;padding:13px 4px}.stat strong{font-size:23px;display:block}.stat span{font-size:10px;color:var(--muted)}
-h2{font-size:19px;margin:23px 0 12px}
-.filters,.actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-button{border:0;border-radius:9px;background:var(--purple);color:white;font-weight:700;font-size:13px;padding:11px 13px;cursor:pointer}
+.stat,.card,.challenge{background:white;border:1px solid var(--line);border-radius:13px}
+.stat{text-align:center;padding:12px 4px}.stat strong{font-size:23px;display:block}.stat span{font-size:10px;color:var(--muted)}
+h2{font-size:19px;margin:22px 0 12px}
+.filters,.actions{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+button{border:0;border-radius:9px;background:var(--purple);color:white;font-weight:700;font-size:13px;padding:11px 12px;cursor:pointer;touch-action:manipulation}
 button:disabled{opacity:.55}
 .secondary,.filters button{background:#eeecff;color:#4938c5}
-.filters button{border:1px solid var(--line);white-space:nowrap}
+.filters button{border:1px solid var(--line)}
 .filters button.active{background:var(--purple);color:white}
-.challenge{padding:14px;margin-bottom:10px}
+.challenge{padding:13px;margin-bottom:9px}
 .challenge h3{font-size:15px;margin:8px 0}
-.challenge p,.muted{font-size:13px;line-height:1.6;color:var(--muted)}
+.challenge p,.muted{font-size:13px;line-height:1.55;color:var(--muted)}
 .badge{float:right;background:#f0f1f7;border-radius:20px;padding:5px 8px;font-size:10px}
-.card{padding:15px;margin-top:12px}
+.card{padding:14px;margin-top:12px}
 label{display:block;font-weight:700;font-size:12px;margin:13px 0 7px}
 input,textarea{width:100%;padding:12px;border:1px solid #dce0ec;border-radius:9px;font:14px system-ui;color:var(--ink);background:white}
 textarea{resize:vertical;line-height:1.6}
-#code{min-height:205px;background:#17152f;color:#f0efff;border-color:#17152f;font:13px/1.65 ui-monospace,Consolas,monospace;white-space:pre;tab-size:4}
-.panel{background:#17152f;color:#f0efff;border-radius:11px;padding:13px;margin-top:12px}
-.panelhead{display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:bold;margin-bottom:9px}
+#code{min-height:190px;background:#17152f;color:#f0efff;border-color:#17152f;font:13px/1.65 ui-monospace,Consolas,monospace;white-space:pre;tab-size:4}
+.panel{background:#17152f;color:#f0efff;border-radius:10px;padding:12px;margin-top:11px}
+.panelhead{display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:bold;margin-bottom:8px}
 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.65 ui-monospace,Consolas,monospace;margin:0}
 #output{color:#a9f3c4}#errors{color:#ff9a9e}
-.feedback{display:none;padding:12px;border-radius:10px;font-size:13px;line-height:1.6;margin-top:12px}
+.feedback{display:none;padding:11px;border-radius:9px;font-size:13px;line-height:1.6;margin-top:11px}
 .good{display:block;background:#e9f9f0;color:#126540;border:1px solid #bce8ce}
 .bad{display:block;background:#fff0ef;color:#a32730;border:1px solid #f0c4c5}
-.explain{display:none;background:#fff8e5;border:1px solid #f1dfa5;border-radius:11px;padding:13px;margin-top:12px;font-size:13px;line-height:1.65}
-.explain h3{margin:0 0 8px;font-size:15px;color:#6c4a00}
+.explain{display:none;background:#fff8e5;border:1px solid #f1dfa5;border-radius:10px;padding:12px;margin-top:11px;font-size:13px;line-height:1.65}
+.explain h3{margin:0 0 7px;font-size:15px;color:#6c4a00}
 .fix{display:block;white-space:pre-wrap;overflow-wrap:anywhere;background:#17152f;color:#a9f3c4;padding:10px;border-radius:8px;margin:8px 0;font:12px/1.6 ui-monospace,Consolas,monospace}
 .pill{display:inline-block;padding:7px 9px;margin:5px 4px 0 0;background:#eae7ff;color:#4938c5;border-radius:20px;font-size:11px}
 .note,footer{font-size:11px;color:var(--muted);line-height:1.6}
 footer{text-align:center;padding:20px}
-@media(min-width:650px){.challenge-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}.challenge{margin:0}}
+@media(min-width:650px){.challenge-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}.challenge{margin:0}}
 </style>
 </head>
 <body>
 <header>
-<nav>
-<div class="logo">SkillProof<span> India.</span></div>
-<div class="status" id="runtimeStatus">Loading Python...</div>
-</nav>
+<nav><div class="logo">SkillProof<span> India.</span></div><div class="status" id="runtimeStatus">Python loads on demand</div></nav>
 <div class="hero">
 <div class="eyebrow">LEARN · CODE · IMPROVE</div>
 <h1>Write code.<br>Understand errors.</h1>
-<p>Practise real Python, see your output, understand mistakes and build practical skills.</p>
+<p>Practise Python, see your output, understand mistakes and build practical skills.</p>
 </div>
 </header>
-
 <main class="wrap">
 <div class="stats">
 <div class="stat"><strong id="total">5</strong><span>Challenges</span></div>
 <div class="stat"><strong id="passedCount">0</strong><span>Passed</span></div>
 <div class="stat"><strong id="percent">0%</strong><span>Progress</span></div>
 </div>
-
 <h2>Choose a challenge</h2>
 <div class="filters">
 <button class="active" data-filter="All">All</button>
@@ -81,44 +77,23 @@ footer{text-align:center;padding:20px}
 <button data-filter="Communication">Communication</button>
 </div>
 <div id="challengeList" class="challenge-list"></div>
-
 <section class="card" id="workspace">
 <div class="tag">YOUR WORKSPACE</div>
 <h2 id="taskTitle">Select a challenge</h2>
 <p id="taskPrompt" class="muted">Choose a challenge above to begin.</p>
-
 <label for="studentName">Your name</label>
 <input id="studentName" maxlength="50" placeholder="Enter your name">
-
 <div id="pythonWorkspace">
 <label for="code">Python code editor</label>
 <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off">print("Hello, SkillProof India!")</textarea>
-<div class="actions">
-<button id="runBtn" disabled>Loading Python...</button>
-<button id="resetCode" class="secondary">Reset example</button>
-</div>
-<p class="note">Run your code to see its real output or error. Fix the mistake and try again.</p>
-
-<div class="panel">
-<div class="panelhead"><span>OUTPUT</span><span id="runTime"></span></div>
-<pre id="output">Your program output will appear here.</pre>
-</div>
-<div class="panel">
-<div class="panelhead"><span>PYTHON ERROR DETAILS</span><span id="errorLine"></span></div>
-<pre id="errors">No errors reported yet.</pre>
-</div>
-
-<div id="errorExplanation" class="explain" aria-live="polite">
-<h3 id="explainTitle">Let's understand the error</h3>
-<div id="explainBody"></div>
-</div>
-
-<div class="actions">
-<button id="passBtn" disabled>Check challenge</button>
-</div>
+<div class="actions"><button id="runBtn">▶ Run Python</button><button id="resetCode" class="secondary">Reset example</button></div>
+<p class="note">The first run downloads the Python runtime. This may take a little time.</p>
+<div class="panel"><div class="panelhead"><span>OUTPUT</span><span id="runTime"></span></div><pre id="output">Your program output will appear here.</pre></div>
+<div class="panel"><div class="panelhead"><span>ERROR DETAILS</span><span id="errorLine"></span></div><pre id="errors">No errors reported yet.</pre></div>
+<div id="errorExplanation" class="explain" aria-live="polite"><h3 id="explainTitle">Understand the error</h3><div id="explainBody"></div></div>
+<div class="actions"><button id="passBtn" disabled>Check challenge</button></div>
 <div id="pythonFeedback" class="feedback" aria-live="polite"></div>
 </div>
-
 <div id="communicationWorkspace" style="display:none">
 <label for="writtenAnswer">Your written answer</label>
 <textarea id="writtenAnswer" maxlength="5000" placeholder="Write your answer here..."></textarea>
@@ -127,58 +102,42 @@ footer{text-align:center;padding:20px}
 <div id="communicationFeedback" class="feedback" aria-live="polite"></div>
 </div>
 </section>
-
 <h2>Your Skill Card</h2>
 <section class="card">
 <div class="tag">SKILLPROOF INDIA · LEARNER PROFILE</div>
 <h2 id="cardName">Your name</h2>
 <div id="cardSkills"></div>
 <p class="muted" id="cardProgress">0 of 5 challenges passed</p>
-<p class="note">Progress is saved in this browser on this device. These results are practice records, not independently verified certificates.</p>
+<p class="note">Progress is saved in this browser on this device. Practice checks are not verified certificates.</p>
 </section>
-<div class="actions">
-<button id="shareBtn">Share Skill Card</button>
-<button id="copyBtn" class="secondary">Copy profile text</button>
-</div>
+<div class="actions"><button id="shareBtn">Share Skill Card</button><button id="copyBtn" class="secondary">Copy profile text</button></div>
 </main>
 <footer>SkillProof India · Learn by doing.</footer>
 
-<script src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js"></script>
 <script>
 const challenges=[
-{id:"py1",cat:"Python",title:"Variables & calculations",prompt:"Store a name and age in variables, then print a sentence containing both. Expected output: My name is Akshay and I am 20 years old.",example:'name = "Akshay"\nage = 20\nprint("My name is", name, "and I am", age, "years old.")',expected:"My name is Akshay and I am 20 years old.",hint:"Create name and age variables, then print a sentence containing both."},
+{id:"py1",cat:"Python",title:"Variables & calculations",prompt:"Store a name and age in variables, then print a sentence containing both. Expected output: My name is Akshay and I am 20 years old.",example:'name = "Akshay"\nage = 20\nprint("My name is", name, "and I am", age, "years old.")',expected:"My name is Akshay and I am 20 years old.",hint:"Create name and age variables and print a sentence containing both."},
 {id:"py2",cat:"Python",title:"Even or odd?",prompt:"Check whether number 7 is even or odd. Expected output: Odd.",example:'number = 7\n\nif number % 2 == 0:\n    print("Even")\nelse:\n    print("Odd")',expected:"Odd",hint:"Use number % 2 == 0, then print Even or Odd in the correct branch."},
 {id:"py3",cat:"Python",title:"Find the largest number",prompt:"Compare a = 12, b = 25 and c = 18. Print the largest number. Expected output: 25.",example:"a = 12\nb = 25\nc = 18\n\nif a >= b and a >= c:\n    print(a)\nelif b >= a and b >= c:\n    print(b)\nelse:\n    print(c)",expected:"25",hint:"Compare all three numbers and print the largest."},
 {id:"co1",cat:"Communication",title:"Introduce yourself",prompt:"Write at least four sentences about your interests, a skill you are learning and a personal goal.",hint:"Mention an interest, something you are learning, and a goal."},
 {id:"co2",cat:"Communication",title:"Explain a problem clearly",prompt:"Write a professional message describing a project problem, what you tried and what help you need.",hint:"State the problem, describe what you tried, and clearly ask for help."}
 ];
-
-let pyodide=null,selected=null,filter="All",busy=false;
-let passed=readStore("sp_passed",[]),answers=readStore("sp_answers",{});
-function readStore(k,f){try{return JSON.parse(localStorage.getItem(k))??f}catch(e){return f}}
-function saveStore(){
- try{
- localStorage.setItem("sp_passed",JSON.stringify(passed));
- localStorage.setItem("sp_answers",JSON.stringify(answers));
- localStorage.setItem("sp_name",document.getElementById("studentName").value.trim());
- }catch(e){}
-}
 const $=id=>document.getElementById(id);
-function showFeedback(id,msg,ok){
- const el=$(id);el.className="feedback "+(ok?"good":"bad");el.textContent=msg;
-}
+function readStore(k,f){try{return JSON.parse(localStorage.getItem(k))??f}catch(e){return f}}
+let pyodide=null,pythonLoading=null,selected=null,filter="All",busy=false;
+let passed=readStore("sp_passed",[]),answers=readStore("sp_answers",{});
+function saveStore(){try{localStorage.setItem("sp_passed",JSON.stringify(passed));localStorage.setItem("sp_answers",JSON.stringify(answers));localStorage.setItem("sp_name",$("studentName").value.trim())}catch(e){}}
+function feedback(id,msg,ok){$(id).className="feedback "+(ok?"good":"bad");$(id).textContent=msg}
 function clearFeedback(id){$(id).className="feedback";$(id).textContent=""}
 function renderChallenges(){
- const list=$("challengeList");list.innerHTML="";
+ const list=$("challengeList");list.replaceChildren();
  challenges.filter(t=>filter==="All"||t.cat===filter).forEach(t=>{
   const el=document.createElement("article");el.className="challenge";
-  const badge=document.createElement("span");badge.className="badge";
-  badge.textContent=passed.includes(t.id)?"✓ Passed":"Not passed";
+  const badge=document.createElement("span");badge.className="badge";badge.textContent=passed.includes(t.id)?"✓ Passed":"Not passed";
   const tag=document.createElement("div");tag.className="tag";tag.textContent=t.cat;
   const h=document.createElement("h3");h.textContent=t.title;
   const p=document.createElement("p");p.textContent=t.prompt;
-  const b=document.createElement("button");b.textContent="Open challenge";
-  if(passed.includes(t.id))b.className="secondary";
+  const b=document.createElement("button");b.textContent="Open challenge";b.className=passed.includes(t.id)?"secondary":"";
   b.onclick=()=>chooseChallenge(t.id);
   el.append(badge,tag,h,p,b);list.appendChild(el);
  });
@@ -186,8 +145,7 @@ function renderChallenges(){
 }
 function chooseChallenge(id){
  selected=challenges.find(t=>t.id===id);
- $("taskTitle").textContent=selected.title;
- $("taskPrompt").textContent=selected.prompt;
+ $("taskTitle").textContent=selected.title;$("taskPrompt").textContent=selected.prompt;
  $("pythonWorkspace").style.display=selected.cat==="Python"?"block":"none";
  $("communicationWorkspace").style.display=selected.cat==="Communication"?"block":"none";
  if(selected.cat==="Python"){
@@ -195,180 +153,153 @@ function chooseChallenge(id){
   $("output").textContent="Your program output will appear here.";
   $("errors").textContent="No errors reported yet.";
   $("errorLine").textContent="";$("runTime").textContent="";
-  $("errorExplanation").style.display="none";
-  clearFeedback("pythonFeedback");$("passBtn").disabled=!pyodide;
- }else{
-  $("writtenAnswer").value=answers[id]||"";
-  clearFeedback("communicationFeedback");
- }
- renderChallenges();
- $("workspace").scrollIntoView({behavior:"smooth",block:"start"});
+  $("errorExplanation").style.display="none";clearFeedback("pythonFeedback");
+  $("passBtn").disabled=!pyodide;
+ }else{$("writtenAnswer").value=answers[id]||"";clearFeedback("communicationFeedback")}
+ renderChallenges();$("workspace").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function updateCard(){
- const name=$("studentName").value.trim();
- $("cardName").textContent=name||"Your name";
- $("passedCount").textContent=passed.length;
- $("total").textContent=challenges.length;
+ $("cardName").textContent=$("studentName").value.trim()||"Your name";
+ $("passedCount").textContent=passed.length;$("total").textContent=challenges.length;
  $("percent").textContent=Math.round(passed.length/challenges.length*100)+"%";
  $("cardProgress").textContent=passed.length+" of "+challenges.length+" challenges passed";
- const box=$("cardSkills");box.innerHTML="";
- const list=challenges.filter(t=>passed.includes(t.id));
- if(!list.length){
-  const p=document.createElement("span");p.className="pill";
-  p.textContent="No challenges passed yet";box.appendChild(p);
- }
- list.forEach(t=>{
-  const p=document.createElement("span");p.className="pill";
-  p.textContent=t.cat+": "+t.title;box.appendChild(p);
- });
+ const box=$("cardSkills");box.replaceChildren();
+ const done=challenges.filter(t=>passed.includes(t.id));
+ if(!done.length){const p=document.createElement("span");p.className="pill";p.textContent="No challenges passed yet";box.appendChild(p)}
+ done.forEach(t=>{const p=document.createElement("span");p.className="pill";p.textContent=t.cat+": "+t.title;box.appendChild(p)});
 }
-document.querySelectorAll("[data-filter]").forEach(b=>b.onclick=()=>{
+document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{
  filter=b.dataset.filter;
  document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));
  renderChallenges();
-});
-
-function explainError(message,code){
- const box=$("errorExplanation"),title=$("explainTitle"),body=$("explainBody");
- const first=message.split("\n").find(x=>x.trim())||message;
- let problem="Python could not finish running your code.";
- let why="Read the error details above and check the line mentioned. The line number can sometimes point to where Python detected the problem, not where it originally began.";
- let fix="Check spelling, brackets, quotation marks, colons and indentation.";
- const lower=message.toLowerCase();
- const lineMatch=message.match(/File "<exec>", line (\d+)/)||message.match(/line (\d+)/);
- $("errorLine").textContent=lineMatch?"Error near line "+lineMatch[1]:"Check traceback below";
+}));
+async function initializePython(){
+ if(pyodide)return true;
+ if(pythonLoading)return pythonLoading;
+ pythonLoading=(async()=>{
+  $("runtimeStatus").textContent="Loading Python...";
+  $("runBtn").disabled=true;$("runBtn").textContent="Loading Python...";
+  try{
+   const script=document.createElement("script");
+   script.src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js";
+   await new Promise((resolve,reject)=>{
+    script.onload=resolve;script.onerror=()=>reject(Error("Python download failed. Check your internet."));
+    document.head.appendChild(script);
+   });
+   pyodide=await loadPyodide();
+   $("runtimeStatus").textContent="Python ready ✓";$("passBtn").disabled=false;
+   return true;
+  }catch(e){
+   $("runtimeStatus").textContent="Python unavailable";$("errors").textContent=String(e);
+   feedback("pythonFeedback","Python could not load. Check internet and retry.",false);
+   return false;
+  }finally{
+   $("runBtn").disabled=false;$("runBtn").textContent="▶ Run Python";
+   pythonLoading=null;
+  }
+ })();
+ return pythonLoading;
+}
+function explainError(message){
+ const lower=message.toLowerCase();let problem="Python could not run your code.",why="Check the traceback and line number. The detected line may not be the original cause.",fix="Check spelling, brackets, quotes, colons and indentation.";
  if(lower.includes("syntaxerror")){
-  problem="There is a syntax or writing-rule mistake.";
-  why="Python must follow exact rules for symbols, brackets, colons and statement structure.";
+  problem="There is a Python syntax mistake.";
+  why="Python requires exact syntax for operators, brackets, quotes and statement structure.";
   if(/cannot assign to expression|maybe you meant '=='|invalid syntax/i.test(message)){
-   problem="You may have used = where a comparison needs ==.";
-   why="A single = assigns a value. Two equals signs == compare two values.";
-   fix="Example:\nif number % 2 == 0:\n    print('Even')";
-  }else if(lower.includes("expected ':'")||lower.includes("expected colon")){
-   problem="A colon may be missing at the end of an if, elif, else, for or while statement.";
-   why="Python uses a colon to start an indented block.";
-   fix="Example:\nif number > 0:\n    print('Positive')";
-  }else if(lower.includes("never closed")||lower.includes("unterminated string")){
-   problem="A bracket or quotation mark may be missing.";
-   why="Text strings and brackets must be opened and closed correctly.";
-   fix='Example:\nprint("Hello")';
-  }else if(lower.includes("unexpected indent")||lower.includes("indentation")){
-   problem="The indentation or spacing may be incorrect.";
-   why="Python uses indentation to decide which statements belong inside a block.";
-   fix="Example:\nif number > 0:\n    print('Positive')";
-  }else{
-   fix="Check the code near the indicated line. Compare brackets, quotes, colons and operators.";
+   problem="You may have used = instead of ==.";
+   why="A single = assigns a value. Double equals == compares two values.";
+   fix="if number % 2 == 0:\n    print('Even')";
+  }else if(lower.includes("indentation")){
+   problem="Check your indentation.";why="Statements inside a block need consistent indentation.";fix="if number > 0:\n    print('Positive')";
+  }else if(lower.includes("never closed")||lower.includes("unterminated")){
+   problem="A quote or bracket may be missing.";why="Make sure every opening quote or bracket is closed.";fix='print("Hello")';
   }
  }else if(lower.includes("indentationerror")||lower.includes("taberror")){
-  problem="Python found an indentation problem.";
-  why="Statements inside the same block need consistent indentation. Four spaces are a common convention.";
-  fix="Example:\nif number > 0:\n    print('Positive')";
+  problem="Python indentation error.";why="Use consistent indentation, commonly four spaces inside a block.";fix="if number > 0:\n    print('Positive')";
  }else if(lower.includes("nameerror")){
-  problem="A variable or function name is not defined.";
-  why="Python cannot find the name you used. Check spelling and whether you assigned a value first.";
-  fix="Example:\nscore = 10\nprint(score)";
+  problem="Variable or function name not defined.";why="Check spelling and assign the variable before using it.";fix="score = 10\nprint(score)";
  }else if(lower.includes("typeerror")){
-  problem="Two values or operations may have incompatible types.";
-  why="For example, Python cannot directly add a number and text with +.";
-  fix="Example:\nage = 20\nprint('Age:', age)";
+  problem="Incompatible data types.";why="For example, adding text and a number directly may fail.";fix="age = 20\nprint('Age:', age)";
  }else if(lower.includes("zerodivisionerror")){
-  problem="Your code tried to divide by zero.";
-  why="Division by zero is not allowed in ordinary Python arithmetic.";
-  fix="Check that the divisor is not zero before dividing.";
+  problem="Division by zero.";why="A number cannot be divided by zero.";fix="Check that the divisor is not zero before dividing.";
  }else if(lower.includes("indexerror")){
-  problem="Your code tried to access a list position that does not exist.";
-  why="Python list indexes start at 0, and the requested index must exist.";
-  fix="Example:\nitems = ['a', 'b']\nprint(items[0])";
+  problem="List index does not exist.";why="List positions start at 0 and must be within the list.";fix="items = ['a', 'b']\nprint(items[0])";
  }else if(lower.includes("keyerror")){
-  problem="A dictionary key was not found.";
-  why="Check the exact key spelling or use .get() when a key may be absent.";
-  fix="Example:\nstudent = {'name': 'Akshay'}\nprint(student.get('name'))";
- }else if(lower.includes("modulenotfounderror")||lower.includes("importerror")){
-  problem="Python could not load a module.";
-  why="The module may not be available in this browser runtime, or its name may be incorrect.";
-  fix="Check the module name and whether the browser-based Python environment supports it.";
+  problem="Dictionary key not found.";why="Check the exact key or use .get() if it may be missing.";fix="student = {'name': 'Akshay'}\nprint(student.get('name'))";
  }else if(lower.includes("valueerror")){
-  problem="A value was not suitable for the operation.";
-  why="Check the type and format of the input. For example, int('hello') is invalid.";
-  fix="Make sure the value can be converted to the type your code expects.";
- }else if(lower.includes("recursionerror")){
-  problem="Your function may be calling itself too many times.";
-  why="Recursive functions need a stopping condition.";
-  fix="Add and check a base case before the recursive call.";
- }else if(lower.includes("memoryerror")){
-  problem="The program ran out of available memory.";
-  why="The program may be creating too much data or an extremely large structure.";
-  fix="Try a smaller input and avoid creating unnecessary large lists or objects.";
- }else if(lower.includes("keyboardinterrupt")){
-  problem="Program execution was interrupted.";
-  why="The run did not complete normally.";
-  fix="Review the program and try running it again.";
+  problem="Invalid value for this operation.";why="Check the value's format and expected type.";fix="Check input before converting it to a number.";
+ }else if(lower.includes("modulenotfounderror")||lower.includes("importerror")){
+  problem="Python could not load a module.";why="The module may not be available in this browser runtime.";fix="Check the module name and runtime support.";
  }
- title.textContent=problem;
- body.replaceChildren();
+ $("errorLine").textContent=(message.match(/File "<exec>", line (\d+)/)||message.match(/line (\d+)/))?"Check line "+((message.match(/File "<exec>", line (\d+)/)||message.match(/line (\d+)/))[1]):"Traceback";
+ $("explainTitle").textContent=problem;$("explainBody").replaceChildren();
  const p=document.createElement("p");p.textContent=why;
- const label=document.createElement("strong");label.textContent="Possible fix";
- const pre=document.createElement("code");pre.className="fix";pre.textContent=fix;
- const raw=document.createElement("p");raw.className="note";raw.textContent="Python message: "+first;
- body.append(p,label,pre,raw);
- box.style.display="block";
+ const strong=document.createElement("strong");strong.textContent="Possible fix";
+ const code=document.createElement("code");code.className="fix";code.textContent=fix;
+ const raw=document.createElement("p");raw.className="note";raw.textContent="Python says: "+message.split("\n").filter(Boolean).slice(-1)[0];
+ $("explainBody").append(p,strong,code,raw);$("errorExplanation").style.display="block";
 }
-async function runPython(){
- if(!pyodide||busy)return;
- busy=true;$("runBtn").disabled=true;$("runBtn").textContent="Running...";
+async function executeCode(){
+ if(busy)return;
+ if(!await initializePython())return;
+ busy=true;$("runBtn").disabled=true;$("passBtn").disabled=true;
  $("output").textContent="";$("errors").textContent="No errors reported yet.";
- $("errorLine").textContent="";$("runTime").textContent="";
- $("errorExplanation").style.display="none";clearFeedback("pythonFeedback");
- const code=$("code").value;
- let output="",errorOutput="";
- try{
-  pyodide.setStdout({batched:s=>{output+=s+"\n"}});
-  pyodide.setStderr({batched:s=>{errorOutput+=s+"\n"}});
-  await pyodide.runPythonAsync(code);
-  $("output").textContent=output.trim()||"Program ran successfully but produced no output.";
-  $("errors").textContent=errorOutput.trim()||"No errors reported.";
-  $("runTime").textContent="Finished";
-  showFeedback("pythonFeedback","Code executed. Check the output. Run alone does not mean the challenge passed.",true);
- }catch(e){
-  const message=String(e);
-  $("errors").textContent=message;
-  explainError(message,code);
-  $("runTime").textContent="Failed";
-  showFeedback("pythonFeedback","Python found an error. Read the explanation and possible fix above, then edit your code and run it again.",false);
- }finally{
-  busy=false;$("runBtn").disabled=!pyodide;$("runBtn").textContent="▶ Run Python";
-  $("passBtn").disabled=!pyodide;
- }
-}
-$("runBtn").onclick=runPython;
-
-$("passBtn").onclick=async()=>{
- if(!selected||selected.cat!=="Python"||!pyodide||busy)return;
- if(!$("studentName").value.trim()){alert("Enter your name first.");return}
- busy=true;$("passBtn").disabled=true;
- const code=$("code").value;
+ $("errorExplanation").style.display="none";$("errorLine").textContent="";
  let output="";
  try{
   pyodide.setStdout({batched:s=>{output+=s+"\n"}});
   pyodide.setStderr({batched:s=>{}});
-  await pyodide.runPythonAsync(code);
-  output=output.trim();
-  answers[selected.id]=code;
+  await pyodide.runPythonAsync($("code").value);
+  $("output").textContent=output.trim()||"Program ran successfully but produced no output.";
+  $("runTime").textContent="Finished";
+  feedback("pythonFeedback","Code executed. Review the output, then check the challenge.",true);
+ }catch(e){
+  $("errors").textContent=String(e);explainError(String(e));
+  $("runTime").textContent="Failed";
+  feedback("pythonFeedback","Python found an error. Read the explanation, fix your code and run it again.",false);
+ }finally{
+  busy=false;$("runBtn").disabled=false;$("runBtn").textContent="▶ Run Python";
+  $("passBtn").disabled=!pyodide;
+ }
+}
+$("runBtn").addEventListener("click",executeCode);
+$("passBtn").addEventListener("click",async()=>{
+ if(!selected||selected.cat!=="Python"||busy)return;
+ if(!$("studentName").value.trim()){alert("Enter your name first.");return}
+ if(!await initializePython())return;
+ busy=true;$("passBtn").disabled=true;
+ let output="";
+ try{
+  pyodide.setStdout({batched:s=>{output+=s+"\n"}});pyodide.setStderr({batched:s=>{}});
+  await pyodide.runPythonAsync($("code").value);output=output.trim();
+  answers[selected.id]=$("code").value;
   if(output===selected.expected){
    if(!passed.includes(selected.id))passed.push(selected.id);
-   showFeedback("pythonFeedback","✓ Challenge passed! Your actual output matches: "+selected.expected,true);
+   feedback("pythonFeedback","✓ Challenge passed! Actual output matches: "+selected.expected,true);
   }else{
    passed=passed.filter(id=>id!==selected.id);
-   showFeedback("pythonFeedback","Not passed yet. Your output: "+(output||"(no output)")+". Expected: "+selected.expected+". "+selected.hint,false);
+   feedback("pythonFeedback","Not passed yet. Your output: "+(output||"(no output)")+". Expected: "+selected.expected+". "+selected.hint,false);
   }
   saveStore();renderChallenges();
- }catch(e){
-  explainError(String(e),code);
-  showFeedback("pythonFeedback","Your code has an error. Fix it before checking the challenge.",false);
- }finally{
-  busy=false;$("passBtn").disabled=!pyodide;
+ }catch(e){$("errors").textContent=String(e);explainError(String(e));feedback("pythonFeedback","Fix the Python error before checking the challenge.",false)}
+ finally{busy=false;$("passBtn").disabled=!pyodide}
+});
+$("resetCode").addEventListener("click",()=>{
+ if(!selected||selected.cat!=="Python")return;
+ $("code").value=selected.example;$("output").textContent="Your program output will appear here.";
+ $("errors").textContent="No errors reported yet.";$("errorLine").textContent="";
+ $("runTime").textContent="";$("errorExplanation").style.display="none";clearFeedback("pythonFeedback");
+});
+$("communicationCheck").addEventListener("click",()=>{
+ if(!selected||selected.cat!=="Communication")return;
+ const answer=$("writtenAnswer").value.trim();
+ if(!$("studentName").value.trim()){alert("Enter your name first.");return}
+ if(!answer){alert("Write your answer first.");return}
+ answers[selected.id]=answer;let ok=false;
+ if(selected.id==="co1"){
+  const n=answer.split(/[.!?]+/).filter(s=>s.trim()).length;
+  ok=n>=4&&/\b(interest|interested|enjoy|like|love|hobby)\b/i.test(answer)&&/\b(learning|learn|studying|study|practicing|practising)\b/i.test(answer)&&/\b(goal|aim|want to|hope to|plan to|aspire)\b/i.test(answer);
+ }else{
+  ok=answer.length>=60&&/\b(problem|issue|error|delay|not working|facing)\b/i.test(answer)&&/\b(tried|checked|tested|attempted|reviewed)\b/i.test(answer)&&/\b(help|assist|review|suggest|support|please)\b/i.test(answer);
  }
-};
-
-$("resetCode").onclick=()=>{
- if(!selected||selected
+ if(ok){if(!passed.includes(selected.id))passed.push(selected.
