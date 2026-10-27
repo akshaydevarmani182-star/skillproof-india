@@ -449,4 +449,122 @@ $("communicationCheck").addEventListener("click",()=>{
 
  const answer=$("writtenAnswer").value.trim();
  if(!$("studentName").value.trim()){
-  alert("Ent
+  
+alert("Enter your name first.");
+return;
+}
+
+if(!answer){
+  alert("Write your answer first.");
+  return;
+}
+
+answers[selected.id] = answer;
+
+let ok = false;
+
+if(selected.id === "co1"){
+  const sentences = answer.split(/[.!?]+/).filter(s => s.trim()).length;
+
+  ok = sentences >= 4 &&
+    /\b(interest|interested|enjoy|like|love|hobby)\b/i.test(answer) &&
+    /\b(learning|learn|studying|study|practicing|practising)\b/i.test(answer) &&
+    /\b(goal|aim|want to|hope to|plan to|aspire)\b/i.test(answer);
+}else{
+  ok = answer.length >= 60 &&
+    /\b(problem|issue|error|delay|not working|facing)\b/i.test(answer) &&
+    /\b(tried|checked|tested|attempted|reviewed)\b/i.test(answer) &&
+    /\b(help|assist|review|suggest|support|please)\b/i.test(answer);
+}
+
+if(ok){
+  if(!passed.includes(selected.id)){
+    passed.push(selected.id);
+  }
+  feedback(
+    "communicationFeedback",
+    "✓ Answer passed! Your response includes the requested points.",
+    true
+  );
+}else{
+  passed = passed.filter(id => id !== selected.id);
+  feedback(
+    "communicationFeedback",
+    "Not passed yet. Add the missing details mentioned in the challenge.",
+    false
+  );
+}
+
+saveStore();
+renderChallenges();
+});
+
+$("studentName").value = localStorage.getItem("sp_name") || "";
+
+$("studentName").addEventListener("input", () => {
+  saveStore();
+  updateCard();
+});
+
+$("writtenAnswer").addEventListener("input", () => {
+  if(selected && selected.cat === "Communication"){
+    answers[selected.id] = $("writtenAnswer").value;
+    saveStore();
+  }
+});
+
+$("code").addEventListener("input", () => {
+  if(selected && selected.cat === "Python"){
+    answers[selected.id] = $("code").value;
+    saveStore();
+  }
+});
+
+function profileText(){
+  const name = $("studentName").value.trim() || "Learner";
+  const skills = challenges
+    .filter(t => passed.includes(t.id))
+    .map(t => t.cat + ": " + t.title);
+
+  return "SkillProof India - " + name +
+    "\n" + passed.length + " of " + challenges.length + " challenges passed.\n" +
+    (skills.length ? skills.join("\n") : "No challenges passed yet.") +
+    "\nPractice progress saved on this device.";
+}
+
+$("shareBtn").addEventListener("click", async () => {
+  const text = profileText();
+
+  if(navigator.share){
+    try{
+      await navigator.share({
+        title: "My SkillProof India Card",
+        text
+      });
+    }catch(error){}
+  }else{
+    try{
+      await navigator.clipboard.writeText(text);
+      alert("Skill Card text copied!");
+    }catch(error){
+      prompt("Copy your Skill Card text:", text);
+    }
+  }
+});
+
+$("copyBtn").addEventListener("click", async () => {
+  const text = profileText();
+
+  try{
+    await navigator.clipboard.writeText(text);
+    alert("Profile text copied!");
+  }catch(error){
+    prompt("Copy your profile text:", text);
+  }
+});
+
+renderChallenges();
+</script>
+</body>
+</html>
+
