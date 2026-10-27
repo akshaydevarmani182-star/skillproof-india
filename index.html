@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#17152f">
 <title>SkillProof India</title>
 <style>
@@ -26,7 +25,7 @@ h1{font-size:clamp(32px,8vw,45px);line-height:1.1;margin:9px 0}
 h2{font-size:19px;margin:22px 0 12px}
 .filters,.actions{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
 button{border:0;border-radius:9px;background:var(--purple);color:white;font-weight:700;font-size:13px;padding:11px 12px;cursor:pointer;touch-action:manipulation}
-button:disabled{opacity:.55}
+button:disabled{opacity:.55;cursor:not-allowed}
 .secondary,.filters button{background:#eeecff;color:#4938c5}
 .filters button{border:1px solid var(--line)}
 .filters button.active{background:var(--purple);color:white}
@@ -113,8 +112,9 @@ footer{text-align:center;padding:20px}
 <div class="actions"><button id="shareBtn">Share Skill Card</button><button id="copyBtn" class="secondary">Copy profile text</button></div>
 </main>
 <footer>SkillProof India · Learn by doing.</footer>
-
 <script>
+"use strict";
+
 const challenges=[
 {id:"py1",cat:"Python",title:"Variables & calculations",prompt:"Store a name and age in variables, then print a sentence containing both. Expected output: My name is Akshay and I am 20 years old.",example:'name = "Akshay"\nage = 20\nprint("My name is", name, "and I am", age, "years old.")',expected:"My name is Akshay and I am 20 years old.",hint:"Create name and age variables and print a sentence containing both."},
 {id:"py2",cat:"Python",title:"Even or odd?",prompt:"Check whether number 7 is even or odd. Expected output: Odd.",example:'number = 7\n\nif number % 2 == 0:\n    print("Even")\nelse:\n    print("Odd")',expected:"Odd",hint:"Use number % 2 == 0, then print Even or Odd in the correct branch."},
@@ -122,86 +122,178 @@ const challenges=[
 {id:"co1",cat:"Communication",title:"Introduce yourself",prompt:"Write at least four sentences about your interests, a skill you are learning and a personal goal.",hint:"Mention an interest, something you are learning, and a goal."},
 {id:"co2",cat:"Communication",title:"Explain a problem clearly",prompt:"Write a professional message describing a project problem, what you tried and what help you need.",hint:"State the problem, describe what you tried, and clearly ask for help."}
 ];
+
 const $=id=>document.getElementById(id);
-function readStore(k,f){try{return JSON.parse(localStorage.getItem(k))??f}catch(e){return f}}
-let pyodide=null,pythonLoading=null,selected=null,filter="All",busy=false;
-let passed=readStore("sp_passed",[]),answers=readStore("sp_answers",{});
-function saveStore(){try{localStorage.setItem("sp_passed",JSON.stringify(passed));localStorage.setItem("sp_answers",JSON.stringify(answers));localStorage.setItem("sp_name",$("studentName").value.trim())}catch(e){}}
-function feedback(id,msg,ok){$(id).className="feedback "+(ok?"good":"bad");$(id).textContent=msg}
-function clearFeedback(id){$(id).className="feedback";$(id).textContent=""}
+function readStore(key,fallback){
+ try{
+  const value=JSON.parse(localStorage.getItem(key));
+  return value===null?fallback:value;
+ }catch(e){return fallback}
+}
+let pyodide=null;
+let pythonLoading=null;
+let selected=null;
+let filter="All";
+let busy=false;
+let passed=readStore("sp_passed",[]);
+let answers=readStore("sp_answers",{});
+
+if(!Array.isArray(passed))passed=[];
+if(!answers||typeof answers!=="object"||Array.isArray(answers))answers={};
+
+function saveStore(){
+ try{
+  localStorage.setItem("sp_passed",JSON.stringify(passed));
+  localStorage.setItem("sp_answers",JSON.stringify(answers));
+  localStorage.setItem("sp_name",$("studentName").value.trim());
+ }catch(e){}
+}
+
+function feedback(id,message,ok){
+ $(id).className="feedback "+(ok?"good":"bad");
+ $(id).textContent=message;
+}
+function clearFeedback(id){
+ $(id).className="feedback";
+ $(id).textContent="";
+}
+
 function renderChallenges(){
- const list=$("challengeList");list.replaceChildren();
+ const list=$("challengeList");
+ list.replaceChildren();
  challenges.filter(t=>filter==="All"||t.cat===filter).forEach(t=>{
-  const el=document.createElement("article");el.className="challenge";
-  const badge=document.createElement("span");badge.className="badge";badge.textContent=passed.includes(t.id)?"✓ Passed":"Not passed";
-  const tag=document.createElement("div");tag.className="tag";tag.textContent=t.cat;
-  const h=document.createElement("h3");h.textContent=t.title;
-  const p=document.createElement("p");p.textContent=t.prompt;
-  const b=document.createElement("button");b.textContent="Open challenge";b.className=passed.includes(t.id)?"secondary":"";
-  b.onclick=()=>chooseChallenge(t.id);
-  el.append(badge,tag,h,p,b);list.appendChild(el);
+  const el=document.createElement("article");
+  el.className="challenge";
+  const badge=document.createElement("span");
+  badge.className="badge";
+  badge.textContent=passed.includes(t.id)?"✓ Passed":"Not passed";
+  const tag=document.createElement("div");
+  tag.className="tag";
+  tag.textContent=t.cat;
+  const heading=document.createElement("h3");
+  heading.textContent=t.title;
+  const p=document.createElement("p");
+  p.textContent=t.prompt;
+  const button=document.createElement("button");
+  button.textContent="Open challenge";
+  button.className=passed.includes(t.id)?"secondary":"";
+  button.addEventListener("click",()=>chooseChallenge(t.id));
+  el.append(badge,tag,heading,p,button);
+  list.appendChild(el);
  });
  updateCard();
 }
+
 function chooseChallenge(id){
  selected=challenges.find(t=>t.id===id);
- $("taskTitle").textContent=selected.title;$("taskPrompt").textContent=selected.prompt;
+ if(!selected)return;
+
+ $("taskTitle").textContent=selected.title;
+ $("taskPrompt").textContent=selected.prompt;
  $("pythonWorkspace").style.display=selected.cat==="Python"?"block":"none";
  $("communicationWorkspace").style.display=selected.cat==="Communication"?"block":"none";
+
  if(selected.cat==="Python"){
   $("code").value=answers[id]||selected.example;
   $("output").textContent="Your program output will appear here.";
   $("errors").textContent="No errors reported yet.";
-  $("errorLine").textContent="";$("runTime").textContent="";
-  $("errorExplanation").style.display="none";clearFeedback("pythonFeedback");
+  $("errorLine").textContent="";
+  $("runTime").textContent="";
+  $("errorExplanation").style.display="none";
+  clearFeedback("pythonFeedback");
   $("passBtn").disabled=!pyodide;
- }else{$("writtenAnswer").value=answers[id]||"";clearFeedback("communicationFeedback")}
- renderChallenges();$("workspace").scrollIntoView({behavior:"smooth",block:"start"});
+ }else{
+  $("writtenAnswer").value=answers[id]||"";
+  clearFeedback("communicationFeedback");
+ }
+
+ $("workspace").scrollIntoView({behavior:"smooth",block:"start"});
 }
+
 function updateCard(){
  $("cardName").textContent=$("studentName").value.trim()||"Your name";
- $("passedCount").textContent=passed.length;$("total").textContent=challenges.length;
+ $("passedCount").textContent=passed.length;
+ $("total").textContent=challenges.length;
  $("percent").textContent=Math.round(passed.length/challenges.length*100)+"%";
  $("cardProgress").textContent=passed.length+" of "+challenges.length+" challenges passed";
- const box=$("cardSkills");box.replaceChildren();
+
+ const box=$("cardSkills");
+ box.replaceChildren();
  const done=challenges.filter(t=>passed.includes(t.id));
- if(!done.length){const p=document.createElement("span");p.className="pill";p.textContent="No challenges passed yet";box.appendChild(p)}
- done.forEach(t=>{const p=document.createElement("span");p.className="pill";p.textContent=t.cat+": "+t.title;box.appendChild(p)});
+
+ if(!done.length){
+  const p=document.createElement("span");
+  p.className="pill";
+  p.textContent="No challenges passed yet";
+  box.appendChild(p);
+ }
+ done.forEach(t=>{
+  const p=document.createElement("span");
+  p.className="pill";
+  p.textContent=t.cat+": "+t.title;
+  box.appendChild(p);
+ });
 }
-document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{
- filter=b.dataset.filter;
- document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));
- renderChallenges();
-}));
+
+document.querySelectorAll("[data-filter]").forEach(button=>{
+ button.addEventListener("click",()=>{
+  filter=button.dataset.filter;
+  document.querySelectorAll("[data-filter]").forEach(item=>{
+   item.classList.toggle("active",item===button);
+  });
+  renderChallenges();
+ });
+});
+
 async function initializePython(){
  if(pyodide)return true;
  if(pythonLoading)return pythonLoading;
+
  pythonLoading=(async()=>{
   $("runtimeStatus").textContent="Loading Python...";
-  $("runBtn").disabled=true;$("runBtn").textContent="Loading Python...";
+  $("runBtn").disabled=true;
+  $("runBtn").textContent="Loading Python...";
+
   try{
-   const script=document.createElement("script");
-   script.src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js";
-   await new Promise((resolve,reject)=>{
-    script.onload=resolve;script.onerror=()=>reject(Error("Python download failed. Check your internet."));
-    document.head.appendChild(script);
-   });
+   if(typeof loadPyodide!=="function"){
+    await new Promise((resolve,reject)=>{
+     const script=document.createElement("script");
+     script.src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js";
+     script.onload=resolve;
+     script.onerror=()=>reject(new Error("Python download failed. Check your internet connection and content blocker."));
+     document.head.appendChild(script);
+    });
+   }
+
+   if(typeof loadPyodide!=="function"){
+    throw new Error("Python runtime did not load. Refresh the page and try again.");
+   }
+
    pyodide=await loadPyodide();
-   $("runtimeStatus").textContent="Python ready ✓";$("passBtn").disabled=false;
+   $("runtimeStatus").textContent="Python ready ✓";
+   $("passBtn").disabled=false;
    return true;
-  }catch(e){
-   $("runtimeStatus").textContent="Python unavailable";$("errors").textContent=String(e);
-   feedback("pythonFeedback","Python could not load. Check internet and retry.",false);
+  }catch(error){
+   $("runtimeStatus").textContent="Python unavailable";
+   $("errors").textContent=String(error);
+   feedback("pythonFeedback","Python could not load. Check your internet connection, then refresh and retry.",false);
    return false;
   }finally{
-   $("runBtn").disabled=false;$("runBtn").textContent="▶ Run Python";
+   $("runBtn").disabled=false;
+   $("runBtn").textContent="▶ Run Python";
    pythonLoading=null;
   }
  })();
+
  return pythonLoading;
 }
+
 function explainError(message){
- const lower=message.toLowerCase();let problem="Python could not run your code.",why="Check the traceback and line number. The detected line may not be the original cause.",fix="Check spelling, brackets, quotes, colons and indentation.";
+ const lower=message.toLowerCase();
+ let problem="Python could not run your code.";
+ let why="Check the traceback and line number. The reported line may not be the original cause.";
+ let fix="Check spelling, brackets, quotes, colons and indentation.";
+
  if(lower.includes("syntaxerror")){
   problem="There is a Python syntax mistake.";
   why="Python requires exact syntax for operators, brackets, quotes and statement structure.";
@@ -209,70 +301,119 @@ function explainError(message){
    problem="You may have used = instead of ==.";
    why="A single = assigns a value. Double equals == compares two values.";
    fix="if number % 2 == 0:\n    print('Even')";
-  }else if(lower.includes("indentation")){
-   problem="Check your indentation.";why="Statements inside a block need consistent indentation.";fix="if number > 0:\n    print('Positive')";
   }else if(lower.includes("never closed")||lower.includes("unterminated")){
-   problem="A quote or bracket may be missing.";why="Make sure every opening quote or bracket is closed.";fix='print("Hello")';
+   problem="A quote or bracket may be missing.";
+   why="Make sure every opening quote or bracket is closed.";
+   fix='print("Hello")';
   }
  }else if(lower.includes("indentationerror")||lower.includes("taberror")){
-  problem="Python indentation error.";why="Use consistent indentation, commonly four spaces inside a block.";fix="if number > 0:\n    print('Positive')";
+  problem="Python indentation error.";
+  why="Use consistent indentation, commonly four spaces inside a block.";
+  fix="if number > 0:\n    print('Positive')";
  }else if(lower.includes("nameerror")){
-  problem="Variable or function name not defined.";why="Check spelling and assign the variable before using it.";fix="score = 10\nprint(score)";
+  problem="Variable or function name not defined.";
+  why="Check spelling and assign the variable before using it.";
+  fix="score = 10\nprint(score)";
  }else if(lower.includes("typeerror")){
-  problem="Incompatible data types.";why="For example, adding text and a number directly may fail.";fix="age = 20\nprint('Age:', age)";
+  problem="Incompatible data types.";
+  why="For example, adding text and a number directly may fail.";
+  fix="age = 20\nprint('Age:', age)";
  }else if(lower.includes("zerodivisionerror")){
-  problem="Division by zero.";why="A number cannot be divided by zero.";fix="Check that the divisor is not zero before dividing.";
+  problem="Division by zero.";
+  why="A number cannot be divided by zero.";
+  fix="Check that the divisor is not zero before dividing.";
  }else if(lower.includes("indexerror")){
-  problem="List index does not exist.";why="List positions start at 0 and must be within the list.";fix="items = ['a', 'b']\nprint(items[0])";
+  problem="List index does not exist.";
+  why="List positions start at 0 and must be within the list.";
+  fix="items = ['a', 'b']\nprint(items[0])";
  }else if(lower.includes("keyerror")){
-  problem="Dictionary key not found.";why="Check the exact key or use .get() if it may be missing.";fix="student = {'name': 'Akshay'}\nprint(student.get('name'))";
+  problem="Dictionary key not found.";
+  why="Check the exact key or use .get() if it may be missing.";
+  fix="student = {'name': 'Akshay'}\nprint(student.get('name'))";
  }else if(lower.includes("valueerror")){
-  problem="Invalid value for this operation.";why="Check the value's format and expected type.";fix="Check input before converting it to a number.";
+  problem="Invalid value for this operation.";
+  why="Check the value's format and expected type.";
+  fix="Check input before converting it to a number.";
  }else if(lower.includes("modulenotfounderror")||lower.includes("importerror")){
-  problem="Python could not load a module.";why="The module may not be available in this browser runtime.";fix="Check the module name and runtime support.";
+  problem="Python could not load a module.";
+  why="The module may not be available in this browser runtime.";
+  fix="Check the module name and runtime support.";
  }
- $("errorLine").textContent=(message.match(/File "<exec>", line (\d+)/)||message.match(/line (\d+)/))?"Check line "+((message.match(/File "<exec>", line (\d+)/)||message.match(/line (\d+)/))[1]):"Traceback";
- $("explainTitle").textContent=problem;$("explainBody").replaceChildren();
- const p=document.createElement("p");p.textContent=why;
- const strong=document.createElement("strong");strong.textContent="Possible fix";
- const code=document.createElement("code");code.className="fix";code.textContent=fix;
- const raw=document.createElement("p");raw.className="note";raw.textContent="Python says: "+message.split("\n").filter(Boolean).slice(-1)[0];
- $("explainBody").append(p,strong,code,raw);$("errorExplanation").style.display="block";
+
+ const match=message.match(/File "<exec>", line (\d+)/)||message.match(/line (\d+)/);
+ $("errorLine").textContent=match?"Check line "+match[1]:"Traceback";
+ $("explainTitle").textContent=problem;
+ $("explainBody").replaceChildren();
+
+ const p=document.createElement("p");
+ p.textContent=why;
+ const strong=document.createElement("strong");
+ strong.textContent="Possible fix";
+ const code=document.createElement("code");
+ code.className="fix";
+ code.textContent=fix;
+ const raw=document.createElement("p");
+ raw.className="note";
+ raw.textContent="Python says: "+message.split("\n").filter(Boolean).slice(-1)[0];
+
+ $("explainBody").append(p,strong,code,raw);
+ $("errorExplanation").style.display="block";
 }
+
 async function executeCode(){
  if(busy)return;
  if(!await initializePython())return;
- busy=true;$("runBtn").disabled=true;$("passBtn").disabled=true;
- $("output").textContent="";$("errors").textContent="No errors reported yet.";
- $("errorExplanation").style.display="none";$("errorLine").textContent="";
+
+ busy=true;
+ $("runBtn").disabled=true;
+ $("passBtn").disabled=true;
+ $("output").textContent="";
+ $("errors").textContent="No errors reported yet.";
+ $("errorExplanation").style.display="none";
+ $("errorLine").textContent="";
  let output="";
+
  try{
-  pyodide.setStdout({batched:s=>{output+=s+"\n"}});
+  pyodide.setStdout({batched:s=>{output+=s+"\n";}});
   pyodide.setStderr({batched:s=>{}});
   await pyodide.runPythonAsync($("code").value);
   $("output").textContent=output.trim()||"Program ran successfully but produced no output.";
   $("runTime").textContent="Finished";
   feedback("pythonFeedback","Code executed. Review the output, then check the challenge.",true);
- }catch(e){
-  $("errors").textContent=String(e);explainError(String(e));
+ }catch(error){
+  $("errors").textContent=String(error);
+  explainError(String(error));
   $("runTime").textContent="Failed";
   feedback("pythonFeedback","Python found an error. Read the explanation, fix your code and run it again.",false);
  }finally{
-  busy=false;$("runBtn").disabled=false;$("runBtn").textContent="▶ Run Python";
+  busy=false;
+  $("runBtn").disabled=false;
+  $("runBtn").textContent="▶ Run Python";
   $("passBtn").disabled=!pyodide;
  }
 }
+
 $("runBtn").addEventListener("click",executeCode);
+
 $("passBtn").addEventListener("click",async()=>{
  if(!selected||selected.cat!=="Python"||busy)return;
- if(!$("studentName").value.trim()){alert("Enter your name first.");return}
+ if(!$("studentName").value.trim()){
+  alert("Enter your name first.");
+  return;
+ }
  if(!await initializePython())return;
- busy=true;$("passBtn").disabled=true;
+
+ busy=true;
+ $("passBtn").disabled=true;
  let output="";
+
  try{
-  pyodide.setStdout({batched:s=>{output+=s+"\n"}});pyodide.setStderr({batched:s=>{}});
-  await pyodide.runPythonAsync($("code").value);output=output.trim();
+  pyodide.setStdout({batched:s=>{output+=s+"\n";}});
+  pyodide.setStderr({batched:s=>{}});
+  await pyodide.runPythonAsync($("code").value);
+  output=output.trim();
   answers[selected.id]=$("code").value;
+
   if(output===selected.expected){
    if(!passed.includes(selected.id))passed.push(selected.id);
    feedback("pythonFeedback","✓ Challenge passed! Actual output matches: "+selected.expected,true);
@@ -280,26 +421,32 @@ $("passBtn").addEventListener("click",async()=>{
    passed=passed.filter(id=>id!==selected.id);
    feedback("pythonFeedback","Not passed yet. Your output: "+(output||"(no output)")+". Expected: "+selected.expected+". "+selected.hint,false);
   }
-  saveStore();renderChallenges();
- }catch(e){$("errors").textContent=String(e);explainError(String(e));feedback("pythonFeedback","Fix the Python error before checking the challenge.",false)}
- finally{busy=false;$("passBtn").disabled=!pyodide}
+  saveStore();
+  renderChallenges();
+ }catch(error){
+  $("errors").textContent=String(error);
+  explainError(String(error));
+  feedback("pythonFeedback","Fix the Python error before checking the challenge.",false);
+ }finally{
+  busy=false;
+  $("passBtn").disabled=!pyodide;
+ }
 });
+
 $("resetCode").addEventListener("click",()=>{
  if(!selected||selected.cat!=="Python")return;
- $("code").value=selected.example;$("output").textContent="Your program output will appear here.";
- $("errors").textContent="No errors reported yet.";$("errorLine").textContent="";
- $("runTime").textContent="";$("errorExplanation").style.display="none";clearFeedback("pythonFeedback");
+ $("code").value=selected.example;
+ $("output").textContent="Your program output will appear here.";
+ $("errors").textContent="No errors reported yet.";
+ $("errorLine").textContent="";
+ $("runTime").textContent="";
+ $("errorExplanation").style.display="none";
+ clearFeedback("pythonFeedback");
 });
+
 $("communicationCheck").addEventListener("click",()=>{
  if(!selected||selected.cat!=="Communication")return;
+
  const answer=$("writtenAnswer").value.trim();
- if(!$("studentName").value.trim()){alert("Enter your name first.");return}
- if(!answer){alert("Write your answer first.");return}
- answers[selected.id]=answer;let ok=false;
- if(selected.id==="co1"){
-  const n=answer.split(/[.!?]+/).filter(s=>s.trim()).length;
-  ok=n>=4&&/\b(interest|interested|enjoy|like|love|hobby)\b/i.test(answer)&&/\b(learning|learn|studying|study|practicing|practising)\b/i.test(answer)&&/\b(goal|aim|want to|hope to|plan to|aspire)\b/i.test(answer);
- }else{
-  ok=answer.length>=60&&/\b(problem|issue|error|delay|not working|facing)\b/i.test(answer)&&/\b(tried|checked|tested|attempted|reviewed)\b/i.test(answer)&&/\b(help|assist|review|suggest|support|please)\b/i.test(answer);
- }
- if(ok){if(!passed.includes(selected.id))passed.push(selected.
+ if(!$("studentName").value.trim()){
+  alert("Ent
