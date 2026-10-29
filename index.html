@@ -2,112 +2,278 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17152f">
 <title>SkillProof India</title>
 <style>
-:root{--green:#176b50;--light:#f2f7f4;--ink:#172b23;--muted:#64746b;--border:#dce7df}
+:root {
+  --purple:#5546e8;
+  --purple-light:#eeeaff;
+  --navy:#17152f;
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --text:#20213a;
+  --muted:#74768c;
+  --border:#e7e8f1;
+  --green:#17845b;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:var(--light);color:var(--ink)}
-header{background:var(--green);color:white;padding:23px 16px}
-header h1{margin:0 0 7px;font-size:27px}
-header p{margin:0;line-height:1.5}
-main{max-width:850px;margin:18px auto;padding:0 13px 35px}
-.card{background:white;padding:18px;margin-bottom:15px;border:1px solid var(--border);border-radius:14px}
-h2{font-size:20px;margin:0 0 12px}
-h3{font-size:16px}
-label{display:block;font-weight:bold;margin:12px 0 6px}
-input,textarea,select{width:100%;padding:12px;border:1px solid #bccdc1;border-radius:8px;font:inherit;background:white}
-textarea{min-height:100px;resize:vertical}
-button{background:var(--green);color:white;border:0;border-radius:8px;padding:11px 15px;font-size:15px;font-weight:bold;cursor:pointer;margin:7px 5px 0 0}
-button.secondary{background:#e5eee8;color:var(--ink)}
-pre,.result{white-space:pre-wrap;overflow-wrap:anywhere;background:#f3f6f4;border:1px solid var(--border);border-radius:8px;padding:12px;min-height:42px}
-.small{color:var(--muted);font-size:14px;line-height:1.5}
-.status{font-weight:bold;margin-top:10px}
-.progress{height:10px;background:#e3ebe5;border-radius:20px;overflow:hidden}
-#progressBar{height:100%;width:0;background:#2b9b69;transition:width .2s}
-.challenge{border-top:1px solid var(--border);padding-top:12px;margin-top:12px}
-footer{text-align:center;color:var(--muted);padding:15px;font-size:13px}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+}
+header{
+  background:var(--navy);
+  color:#fff;
+  padding:27px 20px 32px;
+}
+.topbar{
+  max-width:1000px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.logo{font-size:19px;font-weight:800;letter-spacing:-.4px}
+.logo span{color:#a69cff}
+.pill{
+  border:1px solid #47435f;
+  border-radius:30px;
+  padding:5px 10px;
+  font-size:12px;
+  color:#ddd9ff;
+}
+.hero{
+  max-width:1000px;
+  margin:28px auto 0;
+}
+.hero h1{
+  font-size:clamp(30px,6vw,48px);
+  line-height:1.12;
+  letter-spacing:-1.5px;
+  max-width:650px;
+  margin:0 0 12px;
+}
+.hero h1 span{color:#a69cff}
+.hero p{color:#c4c2d8;max-width:570px;margin:0}
+main{max-width:1000px;margin:22px auto;padding:0 14px 35px}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:20px;
+  margin-bottom:17px;
+  box-shadow:0 4px 18px rgba(31,29,70,.035);
+}
+.card-heading{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-bottom:13px;
+}
+.number{
+  flex-shrink:0;
+  width:36px;height:36px;
+  display:grid;place-items:center;
+  border-radius:11px;
+  background:var(--purple-light);
+  color:var(--purple);
+  font-weight:800;
+}
+h2{font-size:19px;letter-spacing:-.3px;margin:0}
+h3{font-size:15px;margin:16px 0 8px}
+p{margin:8px 0}
+.muted{font-size:13px;color:var(--muted)}
+label{display:block;font-size:13px;font-weight:700;margin:13px 0 6px}
+input,textarea,select{
+  display:block;
+  width:100%;
+  border:1px solid #dfe1ed;
+  border-radius:10px;
+  background:#fff;
+  color:var(--text);
+  padding:12px;
+  font:inherit;
+  font-size:14px;
+  outline:none;
+}
+input:focus,textarea:focus{
+  border-color:var(--purple);
+  box-shadow:0 0 0 3px #5546e81c;
+}
+textarea{min-height:115px;resize:vertical}
+button{
+  border:0;
+  border-radius:10px;
+  padding:11px 15px;
+  background:var(--purple);
+  color:#fff;
+  font-size:13px;
+  font-weight:750;
+  cursor:pointer;
+  margin:9px 5px 0 0;
+}
+button:active{transform:scale(.98)}
+button.secondary{background:var(--purple-light);color:var(--purple)}
+button.dark{background:var(--navy)}
+.output{
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  min-height:44px;
+  background:#f7f7fc;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px;
+  font-size:13px;
+}
+.status{font-size:13px;font-weight:700;margin-top:10px}
+.progress-track{
+  height:9px;background:#e9e8f5;
+  border-radius:20px;overflow:hidden;margin:13px 0 6px;
+}
+#progressBar{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#5546e8,#a49aff);
+  border-radius:20px;transition:width .3s;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;margin-top:16px;
+}
+.stat{
+  background:#f7f6ff;
+  border:1px solid #e9e6ff;
+  padding:13px;border-radius:12px;
+}
+.stat strong{display:block;font-size:22px;color:var(--purple)}
+.stat span{font-size:12px;color:var(--muted)}
+.challenge-note{
+  padding:12px;
+  background:#f8f7ff;
+  border-radius:10px;
+  border:1px solid #ebe8ff;
+  font-size:13px;
+}
+footer{text-align:center;padding:22px 12px;color:var(--muted);font-size:12px}
+@media(min-width:720px){
+  main{display:grid;grid-template-columns:1fr 1fr;gap:17px;align-items:start}
+  .card{margin-bottom:0}
+  .dashboard,.progress-card{grid-column:1/-1}
+}
 </style>
 </head>
 <body>
+
 <header>
-  <h1>SkillProof India 🇮🇳</h1>
-  <p>Practice coding, improve communication and build your skills step by step.</p>
+  <div class="topbar">
+    <div class="logo">SkillProof <span>India.</span></div>
+    <div class="pill">LEARN · PRACTISE · GROW</div>
+  </div>
+  <div class="hero">
+    <h1>Learn it. <span>Try it.</span><br>Show your skills.</h1>
+    <p>Build coding confidence, practise communication and improve your English — one step at a time.</p>
+  </div>
 </header>
 
 <main>
-<section class="card">
-  <h2>Your learning dashboard</h2>
+<section class="card dashboard">
+  <div class="card-heading">
+    <div class="number">★</div>
+    <div><h2>Your learning dashboard</h2><div class="muted">Every small step counts.</div></div>
+  </div>
   <p id="welcome">Welcome, learner!</p>
-  <div class="progress"><div id="progressBar"></div></div>
-  <p id="progressText" class="small">Challenges completed: 0</p>
-  <p class="small">Your progress is saved only in this browser on this device.</p>
+  <div class="progress-track"><div id="progressBar"></div></div>
+  <div class="muted" id="progressText">0 activities completed</div>
+  <div class="stats">
+    <div class="stat"><strong id="completedCount">0</strong><span>Activities completed</span></div>
+    <div class="stat"><strong>3</strong><span>Practice areas</span></div>
+  </div>
   <label for="learnerName">Your name</label>
   <input id="learnerName" placeholder="Enter your name">
   <button id="saveName">Save name</button>
   <button class="secondary" id="resetProgress">Reset progress</button>
+  <p class="muted">Progress is stored in this browser on this device only.</p>
 </section>
 
 <section class="card">
-  <h2>1. Python practice</h2>
-  <p class="small">Write Python code and run it in your browser. The first run may take a little time to load.</p>
+  <div class="card-heading">
+    <div class="number">01</div>
+    <div><h2>Python playground</h2><div class="muted">Write code and run it.</div></div>
+  </div>
+  <p class="muted">The Python engine loads online. Your first run may take a little time.</p>
   <label for="pythonCode">Your Python code</label>
   <textarea id="pythonCode" spellcheck="false">name = "Student"
 print("Hello", name)</textarea>
-  <button id="runPython">Run Python</button>
-  <div id="pythonStatus" class="status" role="status">Ready to run.</div>
+  <button id="runPython">▶ Run Python</button>
+  <div id="pythonStatus" class="status">Ready to run.</div>
   <h3>Output</h3>
-  <pre id="pythonOutput">Your program output will appear here.</pre>
+  <pre id="pythonOutput" class="output">Your program output will appear here.</pre>
   <h3>Beginner error help</h3>
-  <div id="pythonHelp" class="result">Run your code to see output and basic error guidance.</div>
+  <div id="pythonHelp" class="output">Run your code to see output and basic error guidance.</div>
 </section>
 
 <section class="card">
-  <h2>2. Python challenge</h2>
-  <p><b>Challenge:</b> Print the word <code>Odd</code> if the number is odd; otherwise print <code>Even</code>.</p>
+  <div class="card-heading">
+    <div class="number">02</div>
+    <div><h2>Python challenge</h2><div class="muted">Think, code and test.</div></div>
+  </div>
+  <div class="challenge-note"><b>Your task</b><br>Print <code>Odd</code> if the number is odd; otherwise print <code>Even</code>.</div>
   <label for="challengeCode">Your solution</label>
   <textarea id="challengeCode" spellcheck="false">number = 7
 if number % 2 != 0:
     print("Odd")
 else:
     print("Even")</textarea>
-  <button id="checkPythonChallenge">Run and check challenge</button>
-  <div id="challengeResult" class="result">Your result will appear here.</div>
+  <button id="checkPythonChallenge">Run and check</button>
+  <div id="challengeResult" class="output">Your result will appear here.</div>
 </section>
 
 <section class="card">
-  <h2>3. Communication practice</h2>
-  <p id="communicationQuestion">Introduce yourself in 3–5 sentences. Include your name, what you study and one goal.</p>
+  <div class="card-heading">
+    <div class="number">03</div>
+    <div><h2>Communication practice</h2><div class="muted">Express your ideas clearly.</div></div>
+  </div>
+  <div class="challenge-note" id="communicationQuestion">Introduce yourself in 3–5 sentences. Include your name, what you study and one goal.</div>
   <label for="communicationAnswer">Your answer</label>
   <textarea id="communicationAnswer" placeholder="Write your answer here..."></textarea>
   <button id="checkCommunication">Check answer</button>
-  <div id="communicationResult" class="result">Complete the task to get feedback.</div>
-  <button class="secondary" id="nextCommunication">Next communication challenge</button>
+  <div id="communicationResult" class="output">Complete the task to get feedback.</div>
+  <button class="secondary" id="nextCommunication">Next challenge →</button>
 </section>
 
 <section class="card">
-  <h2>4. Basic English grammar helper</h2>
-  <p class="small">Enter a sentence to check for a few common mistakes. This is a simple rule-based helper, not a complete grammar checker.</p>
+  <div class="card-heading">
+    <div class="number">04</div>
+    <div><h2>English grammar helper</h2><div class="muted">Check common mistakes.</div></div>
+  </div>
+  <p class="muted">This basic rule-based tool checks selected sentence patterns. It is not a complete grammar checker.</p>
   <label for="grammarInput">Your sentence</label>
   <textarea id="grammarInput" placeholder="Example: I am student. He go to college."></textarea>
   <button id="checkGrammar">Check grammar</button>
   <h3>Suggested correction</h3>
-  <div id="grammarOutput" class="result">Your correction will appear here.</div>
+  <div id="grammarOutput" class="output">Your correction will appear here.</div>
 </section>
 
-<section class="card">
-  <h2>5. Your progress</h2>
-  <p id="summary">Finish a challenge to start tracking your progress.</p>
-  <p class="small">This is practice feedback, not an official certificate or verified skill assessment.</p>
+<section class="card progress-card">
+  <div class="card-heading">
+    <div class="number">✓</div>
+    <div><h2>Your progress</h2><div class="muted">Keep learning consistently.</div></div>
+  </div>
+  <div id="summary">Complete an activity to start tracking your progress.</div>
+  <p class="muted">Practice results are not an official certificate or verified skill assessment. Progress is not synced between devices.</p>
 </section>
 </main>
 
-<footer>SkillProof India · Learn, practise and improve.</footer>
+<footer>SkillProof India · Built for learners, one step at a time.</footer>
 
 <script>
 const $ = id => document.getElementById(id);
 const STORAGE_KEY = "skillproofIndiaProgressV1";
-
 let progress = {name:"",completed:[],communicationIndex:0};
 let pyodideInstance = null;
 let pyodideLoading = null;
@@ -125,167 +291,113 @@ function loadProgress(){
     progress.name = saved.name || "";
     progress.completed = Array.isArray(saved.completed) ? saved.completed : [];
     progress.communicationIndex = Number(saved.communicationIndex) || 0;
-  }catch(error){
-    progress = {name:"",completed:[],communicationIndex:0};
-  }
+  }catch(e){}
 }
 
 function saveProgress(){
   try{
     localStorage.setItem(STORAGE_KEY,JSON.stringify(progress));
-  }catch(error){
-    console.warn("Progress could not be saved on this device.");
-  }
+  }catch(e){}
   updateDashboard();
 }
 
 function markCompleted(task){
-  if(!progress.completed.includes(task)){
-    progress.completed.push(task);
-  }
+  if(!progress.completed.includes(task)) progress.completed.push(task);
   saveProgress();
 }
 
 function updateDashboard(){
-  $("welcome").textContent = progress.name
-    ? "Welcome, " + progress.name + "!"
-    : "Welcome, learner!";
-
+  $("welcome").textContent = progress.name ? "Welcome, " + progress.name + "!" : "Welcome, learner!";
   $("learnerName").value = progress.name;
-
-  const total = 3;
-  const done = Math.min(progress.completed.length,total);
-  $("progressBar").style.width = (done / total * 100) + "%";
-  $("progressText").textContent =
-    "Challenges completed: " + progress.completed.length;
-
+  $("completedCount").textContent = progress.completed.length;
+  $("progressText").textContent = progress.completed.length + " activities completed";
+  $("progressBar").style.width = Math.min(100,progress.completed.length / 3 * 100) + "%";
   $("summary").textContent = progress.completed.length
-    ? "Completed activities: " + progress.completed.join(", ")
-    : "Finish a challenge to start tracking your progress.";
-
-  $("communicationQuestion").textContent =
-    communicationTasks[progress.communicationIndex % communicationTasks.length];
+    ? "Completed: " + progress.completed.join(", ")
+    : "Complete an activity to start tracking your progress.";
+  $("communicationQuestion").textContent = communicationTasks[progress.communicationIndex % communicationTasks.length];
 }
 
 $("saveName").addEventListener("click",()=>{
   progress.name = $("learnerName").value.trim();
   saveProgress();
-  $("welcome").textContent = progress.name
-    ? "Welcome, " + progress.name + "!"
-    : "Welcome, learner!";
 });
 
 $("resetProgress").addEventListener("click",()=>{
-  if(confirm("Reset saved name and progress on this device?")){
+  if(confirm("Reset the saved name and progress on this device?")){
     progress = {name:"",completed:[],communicationIndex:0};
     saveProgress();
-    $("communicationResult").textContent = "Progress reset.";
     $("challengeResult").textContent = "Your result will appear here.";
+    $("communicationResult").textContent = "Complete the task to get feedback.";
   }
 });
 
 async function getPyodide(){
   if(pyodideInstance) return pyodideInstance;
   if(pyodideLoading) return pyodideLoading;
-
   pyodideLoading = (async()=>{
-    const script = document.createElement("script");
-    script.src = "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js";
-
-    await new Promise((resolve,reject)=>{
-      script.onload = resolve;
-      script.onerror = ()=>reject(new Error(
-        "Python engine could not load. Check your internet connection and try again."
-      ));
-      document.head.appendChild(script);
-    });
-
-    pyodideInstance = await loadPyodide();
+    if(!window.loadPyodide){
+      await new Promise((resolve,reject)=>{
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js";
+        script.onload = resolve;
+        script.onerror = ()=>reject(new Error("Python engine failed to load. Check your internet connection."));
+        document.head.appendChild(script);
+      });
+    }
+    pyodideInstance = await window.loadPyodide();
     return pyodideInstance;
   })();
-
-  try{
-    return await pyodideLoading;
-  }catch(error){
-    pyodideLoading = null;
-    throw error;
-  }
+  try{return await pyodideLoading;}
+  catch(e){pyodideLoading=null;throw e;}
 }
 
-async function executePython(code,outputElement,statusElement,helpElement){
-  outputElement.textContent = "";
-  statusElement.textContent = "Loading Python and running your code...";
+function explainPythonError(message){
+  if(/SyntaxError/i.test(message)) return "SyntaxError: check spelling, brackets, quotation marks, colons and indentation.";
+  if(/NameError/i.test(message)) return "NameError: check whether each variable or function is defined and spelled correctly.";
+  if(/IndentationError/i.test(message)) return "IndentationError: check the spaces at the beginning of each line.";
+  if(/TypeError/i.test(message)) return "TypeError: check whether the values and operations are compatible.";
+  if(/ZeroDivisionError/i.test(message)) return "ZeroDivisionError: a number cannot be divided by zero.";
+  return "Read the error message above. This helper recognises only some common Python errors.";
+}
 
+async function executePython(code){
+  $("pythonOutput").textContent = "";
+  $("pythonStatus").textContent = "Loading Python and running code...";
   try{
     const py = await getPyodide();
     let captured = "";
-
-    py.setStdout({batched: text => { captured += text + "\n"; }});
-    py.setStderr({batched: text => { captured += text + "\n"; }});
-
+    py.setStdout({batched:text=>{captured += text + "\n";}});
+    py.setStderr({batched:text=>{captured += text + "\n";}});
     await py.runPythonAsync(code);
-
-    outputElement.textContent = captured.trimEnd() || "(No output. Try using print().)";
-    statusElement.textContent = "Code executed.";
-    helpElement.textContent = "No Python exception was reported. Check your output to confirm the result.";
+    $("pythonOutput").textContent = captured.trimEnd() || "(No output. Try using print().)";
+    $("pythonStatus").textContent = "Code executed.";
+    $("pythonHelp").textContent = "No Python exception was reported. Check the output to confirm your result.";
     return {ok:true,output:captured.trimEnd()};
-  }catch(error){
-    const message = String(error);
-    outputElement.textContent = message;
-    statusElement.textContent = "Python reported an error.";
-    helpElement.textContent = explainPythonError(message);
+  }catch(e){
+    const message = String(e);
+    $("pythonOutput").textContent = message;
+    $("pythonStatus").textContent = "Python reported an error.";
+    $("pythonHelp").textContent = explainPythonError(message);
     return {ok:false,output:message};
   }
 }
 
-function explainPythonError(message){
-  if(/SyntaxError/i.test(message)){
-    return "SyntaxError: check spelling, brackets, colons, quotation marks and indentation.";
-  }
-  if(/NameError/i.test(message)){
-    return "NameError: check whether every variable or function name is defined and spelled correctly.";
-  }
-  if(/IndentationError/i.test(message)){
-    return "IndentationError: check the spaces at the beginning of each line in your code.";
-  }
-  if(/TypeError/i.test(message)){
-    return "TypeError: check whether the values and operations are compatible.";
-  }
-  if(/ZeroDivisionError/i.test(message)){
-    return "ZeroDivisionError: a number cannot be divided by zero.";
-  }
-  return "Read the error message above. This helper recognises only some common Python errors.";
-}
-
 $("runPython").addEventListener("click",async()=>{
-  await executePython(
-    $("pythonCode").value,
-    $("pythonOutput"),
-    $("pythonStatus"),
-    $("pythonHelp")
-  );
+  await executePython($("pythonCode").value);
 });
 
 $("checkPythonChallenge").addEventListener("click",async()=>{
-  const result = await executePython(
-    $("challengeCode").value,
-    $("pythonOutput"),
-    $("pythonStatus"),
-    $("pythonHelp")
-  );
-
+  const result = await executePython($("challengeCode").value);
   if(!result.ok){
-    $("challengeResult").textContent = "Not passed: fix the Python error and try again.";
+    $("challengeResult").textContent = "Not passed. Fix the Python error and try again.";
     return;
   }
-
   if(result.output.trim() === "Odd" || result.output.trim() === "Even"){
-    $("challengeResult").textContent =
-      "Passed! Your program printed " + result.output.trim() + ".";
+    $("challengeResult").textContent = "Passed! Your program printed " + result.output.trim() + ".";
     markCompleted("Python challenge");
   }else{
-    $("challengeResult").textContent =
-      "Not passed yet. Expected the output to be exactly Odd or Even.";
+    $("challengeResult").textContent = "Not passed yet. Expected the output to be exactly Odd or Even.";
   }
 });
 
@@ -293,25 +405,21 @@ $("checkCommunication").addEventListener("click",()=>{
   const answer = $("communicationAnswer").value.trim();
   const words = answer.split(/\s+/).filter(Boolean);
   const task = progress.communicationIndex % communicationTasks.length;
-
   if(words.length < 8){
-    $("communicationResult").textContent =
-      "Not passed yet. Add more detail. Aim for at least 8 words and answer the task clearly.";
+    $("communicationResult").textContent = "Not passed yet. Add more detail. Aim for at least 8 words.";
     return;
   }
-
   const lower = answer.toLowerCase();
   let checks = 0;
-
-  if(task === 0){
+  if(task===0){
     if(/\b(i am|i'm|my name)\b/.test(lower)) checks++;
     if(/\b(study|student|college|learning)\b/.test(lower)) checks++;
     if(/\b(want|goal|hope|plan|aim)\b/.test(lower)) checks++;
-  }else if(task === 1){
+  }else if(task===1){
     if(/\b(problem|issue|error|not working|failed)\b/.test(lower)) checks++;
     if(/\b(tried|try|checked|restarted|attempted)\b/.test(lower)) checks++;
     if(/\b(help|need|because|when|but)\b/.test(lower)) checks++;
-  }else if(task === 2){
+  }else if(task===2){
     if(/\b(project|app|website|idea|tool)\b/.test(lower)) checks++;
     if(/\b(help|useful|helps|users|people|students)\b/.test(lower)) checks++;
     if(/\b(because|so that|will|can)\b/.test(lower)) checks++;
@@ -320,20 +428,16 @@ $("checkCommunication").addEventListener("click",()=>{
     if(/\b(plan|daily|week|every day|will)\b/.test(lower)) checks++;
     if(/\b(because|goal|want|help)\b/.test(lower)) checks++;
   }
-
-  if(checks >= 2){
-    $("communicationResult").textContent =
-      "Passed the basic checklist! You answered with enough detail and included relevant points. This is an automated practice check, not a human assessment.";
-    markCompleted("Communication challenge " + (task + 1));
+  if(checks>=2){
+    $("communicationResult").textContent = "Passed the basic checklist! You included relevant details. This automated check is not a human assessment.";
+    markCompleted("Communication challenge " + (task+1));
   }else{
-    $("communicationResult").textContent =
-      "Not passed yet. Add specific details that answer the task. The checker looks for a few keywords, so it may miss good answers too.";
+    $("communicationResult").textContent = "Not passed yet. Add details that answer the task. This simple checker uses keywords and may miss good answers.";
   }
 });
 
 $("nextCommunication").addEventListener("click",()=>{
-  progress.communicationIndex =
-    (progress.communicationIndex + 1) % communicationTasks.length;
+  progress.communicationIndex = (progress.communicationIndex+1) % communicationTasks.length;
   $("communicationAnswer").value = "";
   $("communicationResult").textContent = "Write your answer to the new task.";
   saveProgress();
@@ -342,12 +446,11 @@ $("nextCommunication").addEventListener("click",()=>{
 function checkGrammar(text){
   let corrected = text;
   const explanations = [];
-
   const rules = [
-    [/\bI am student\b/gi,"I am a student","Use 'a' before a singular countable noun such as 'student'."],
-    [/\bHe go\b/gi,"He goes","With he, she or it in the present simple, use 'goes'."],
-    [/\bShe go\b/gi,"She goes","With he, she or it in the present simple, use 'goes'."],
-    [/\bIt go\b/gi,"It goes","With he, she or it in the present simple, use 'goes'."],
+    [/\bI am student\b/gi,"I am a student","Use 'a' before 'student'."],
+    [/\bHe go\b/gi,"He goes","Use 'goes' with he."],
+    [/\bShe go\b/gi,"She goes","Use 'goes' with she."],
+    [/\bIt go\b/gi,"It goes","Use 'goes' with it."],
     [/\bI has\b/gi,"I have","Use 'have' with I."],
     [/\bYou has\b/gi,"You have","Use 'have' with you."],
     [/\bWe has\b/gi,"We have","Use 'have' with we."],
@@ -355,20 +458,20 @@ function checkGrammar(text){
     [/\bHe have\b/gi,"He has","Use 'has' with he."],
     [/\bShe have\b/gi,"She has","Use 'has' with she."],
     [/\bIt have\b/gi,"It has","Use 'has' with it."],
-    [/\bMy project are\b/gi,"My project is","'Project' is singular, so use 'is' instead of 'are'."],
+    [/\bMy project are\b/gi,"My project is","'Project' is singular, so use 'is'."],
     [/\bMy projects is\b/gi,"My projects are","'Projects' is plural, so use 'are'."],
-    [/\bI didn't tried\b/gi,"I didn't try","After 'didn't', use the base form 'try'."],
-    [/\bI didn't went\b/gi,"I didn't go","After 'didn't', use the base form 'go'."],
-    [/\bI didn't knew\b/gi,"I didn't know","After 'didn't', use the base form 'know'."],
-    [/\bPlease helps me\b/gi,"Please help me","Use the base form 'help' after 'please'."],
-    [/\bHe don't\b/gi,"He doesn't","Use 'doesn't' with he, she or it."],
-    [/\bShe don't\b/gi,"She doesn't","Use 'doesn't' with he, she or it."],
+    [/\bI didn't tried\b/gi,"I didn't try","Use the base form after 'didn't'."],
+    [/\bI didn't went\b/gi,"I didn't go","Use the base form after 'didn't'."],
+    [/\bI didn't knew\b/gi,"I didn't know","Use the base form after 'didn't'."],
+    [/\bPlease helps me\b/gi,"Please help me","Use 'help' after 'please'."],
+    [/\bHe don't\b/gi,"He doesn't","Use 'doesn't' with he."],
+    [/\bShe don't\b/gi,"She doesn't","Use 'doesn't' with she."],
     [/\bI is\b/gi,"I am","Use 'am' with I."],
     [/\bThey is\b/gi,"They are","Use 'are' with they."],
     [/\bWe is\b/gi,"We are","Use 'are' with we."]
   ];
-
   for(const [pattern,replacement,explanation] of rules){
+    pattern.lastIndex = 0;
     if(pattern.test(corrected)){
       pattern.lastIndex = 0;
       corrected = corrected.replace(pattern,replacement);
@@ -376,29 +479,19 @@ function checkGrammar(text){
     }
     pattern.lastIndex = 0;
   }
-
   return {corrected,explanations};
 }
 
 $("checkGrammar").addEventListener("click",()=>{
   const input = $("grammarInput").value.trim();
-
   if(!input){
     $("grammarOutput").textContent = "Please enter a sentence first.";
     return;
   }
-
   const result = checkGrammar(input);
-
-  if(result.explanations.length){
-    $("grammarOutput").textContent =
-      "Suggested correction:\n" + result.corrected +
-      "\n\nWhy:\n- " + result.explanations.join("\n- ") +
-      "\n\nNote: This basic checker catches only selected patterns.";
-  }else{
-    $("grammarOutput").textContent =
-      "No supported mistake was detected by this basic checker.\n\nThat does not guarantee the sentence is grammatically perfect.";
-  }
+  $("grammarOutput").textContent = result.explanations.length
+    ? "Suggested correction:\n" + result.corrected + "\n\nWhy:\n- " + result.explanations.join("\n- ") + "\n\nNote: This basic checker catches selected patterns only."
+    : "No supported mistake was detected by this basic checker.\n\nThat does not guarantee the sentence is grammatically perfect.";
 });
 
 loadProgress();
