@@ -1,719 +1,408 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#17152f">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SkillProof India</title>
 <style>
-:root{--bg:#f5f6fb;--ink:#192039;--muted:#70788d;--purple:#5947ed;--line:#e2e5ef}
+:root{--green:#176b50;--light:#f2f7f4;--ink:#172b23;--muted:#64746b;--border:#dce7df}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,Arial,sans-serif}
-header{background:#17152f;color:white;padding:19px 15px 25px}
-nav,.wrap{max-width:850px;margin:auto}
-nav{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.logo{font-size:21px;font-weight:850}.logo span{color:#aaa0ff}
-.status{font-size:10px;border:1px solid #56516e;border-radius:25px;padding:7px 8px}
-.hero{margin-top:25px}.eyebrow,.tag{font-size:11px;font-weight:800;letter-spacing:1px;color:#7564f5}
-.hero .eyebrow{color:#b8b0ff}
-h1{font-size:clamp(32px,8vw,45px);line-height:1.1;margin:9px 0}
-.hero p{color:#d1cee4;line-height:1.6;font-size:14px}
-.wrap{padding:17px 12px 35px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.stat,.card,.challenge{background:white;border:1px solid var(--line);border-radius:13px}
-.stat{text-align:center;padding:12px 4px}.stat strong{font-size:23px;display:block}.stat span{font-size:10px;color:var(--muted)}
-h2{font-size:19px;margin:22px 0 12px}
-.filters,.actions{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
-button{border:0;border-radius:9px;background:var(--purple);color:white;font-weight:700;font-size:13px;padding:11px 12px;cursor:pointer;touch-action:manipulation}
-button:disabled{opacity:.55;cursor:not-allowed}
-.secondary,.filters button{background:#eeecff;color:#4938c5}
-.filters button{border:1px solid var(--line)}
-.filters button.active{background:var(--purple);color:white}
-.challenge{padding:13px;margin-bottom:9px}
-.challenge h3{font-size:15px;margin:8px 0}
-.challenge p,.muted{font-size:13px;line-height:1.55;color:var(--muted)}
-.badge{float:right;background:#f0f1f7;border-radius:20px;padding:5px 8px;font-size:10px}
-.card{padding:14px;margin-top:12px}
-label{display:block;font-weight:700;font-size:12px;margin:13px 0 7px}
-input,textarea{width:100%;padding:12px;border:1px solid #dce0ec;border-radius:9px;font:14px system-ui;color:var(--ink);background:white}
-textarea{resize:vertical;line-height:1.6}
-#code{min-height:190px;background:#17152f;color:#f0efff;border-color:#17152f;font:13px/1.65 ui-monospace,Consolas,monospace;white-space:pre;tab-size:4}
-.panel{background:#17152f;color:#f0efff;border-radius:10px;padding:12px;margin-top:11px}
-.panelhead{display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:bold;margin-bottom:8px}
-pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.65 ui-monospace,Consolas,monospace;margin:0}
-#output{color:#a9f3c4}#errors{color:#ff9a9e}
-.feedback{display:none;padding:11px;border-radius:9px;font-size:13px;line-height:1.6;margin-top:11px}
-.good{display:block;background:#e9f9f0;color:#126540;border:1px solid #bce8ce}
-.bad{display:block;background:#fff0ef;color:#a32730;border:1px solid #f0c4c5}
-.explain{display:none;background:#fff8e5;border:1px solid #f1dfa5;border-radius:10px;padding:12px;margin-top:11px;font-size:13px;line-height:1.65}
-.explain h3{margin:0 0 7px;font-size:15px;color:#6c4a00}
-.fix{display:block;white-space:pre-wrap;overflow-wrap:anywhere;background:#17152f;color:#a9f3c4;padding:10px;border-radius:8px;margin:8px 0;font:12px/1.6 ui-monospace,Consolas,monospace}
-.pill{display:inline-block;padding:7px 9px;margin:5px 4px 0 0;background:#eae7ff;color:#4938c5;border-radius:20px;font-size:11px}
-.note,footer{font-size:11px;color:var(--muted);line-height:1.6}
-footer{text-align:center;padding:20px}
-.feedback h3{font-size:15px;margin:14px 0 6px}
-.feedback ul{padding-left:20px}
-.feedback li{margin:5px 0}
-.feedback .grammar-item{padding:9px;margin-top:8px;background:#fff8e5;border:1px solid #f1dfa5;border-radius:8px;color:#192039}
-.feedback .wrong{color:#a32730}
-.feedback .correct{color:#126540;font-weight:700}
-.feedback .reason{color:#70788d;font-size:12px}
-@media(min-width:650px){.challenge-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}.challenge{margin:0}}
+body{margin:0;font-family:Arial,sans-serif;background:var(--light);color:var(--ink)}
+header{background:var(--green);color:white;padding:23px 16px}
+header h1{margin:0 0 7px;font-size:27px}
+header p{margin:0;line-height:1.5}
+main{max-width:850px;margin:18px auto;padding:0 13px 35px}
+.card{background:white;padding:18px;margin-bottom:15px;border:1px solid var(--border);border-radius:14px}
+h2{font-size:20px;margin:0 0 12px}
+h3{font-size:16px}
+label{display:block;font-weight:bold;margin:12px 0 6px}
+input,textarea,select{width:100%;padding:12px;border:1px solid #bccdc1;border-radius:8px;font:inherit;background:white}
+textarea{min-height:100px;resize:vertical}
+button{background:var(--green);color:white;border:0;border-radius:8px;padding:11px 15px;font-size:15px;font-weight:bold;cursor:pointer;margin:7px 5px 0 0}
+button.secondary{background:#e5eee8;color:var(--ink)}
+pre,.result{white-space:pre-wrap;overflow-wrap:anywhere;background:#f3f6f4;border:1px solid var(--border);border-radius:8px;padding:12px;min-height:42px}
+.small{color:var(--muted);font-size:14px;line-height:1.5}
+.status{font-weight:bold;margin-top:10px}
+.progress{height:10px;background:#e3ebe5;border-radius:20px;overflow:hidden}
+#progressBar{height:100%;width:0;background:#2b9b69;transition:width .2s}
+.challenge{border-top:1px solid var(--border);padding-top:12px;margin-top:12px}
+footer{text-align:center;color:var(--muted);padding:15px;font-size:13px}
 </style>
 </head>
 <body>
 <header>
-<nav>
-<div class="logo">SkillProof<span> India.</span></div>
-<div class="status" id="runtimeStatus">Python loads on demand</div>
-</nav>
-<div class="hero">
-<div class="eyebrow">LEARN · CODE · IMPROVE</div>
-<h1>Write code.<br>Understand errors.</h1>
-<p>Practise Python, see your output, understand mistakes and build practical skills.</p>
-</div>
+  <h1>SkillProof India 🇮🇳</h1>
+  <p>Practice coding, improve communication and build your skills step by step.</p>
 </header>
 
-<main class="wrap">
-<div class="stats">
-<div class="stat"><strong id="total">5</strong><span>Challenges</span></div>
-<div class="stat"><strong id="passedCount">0</strong><span>Passed</span></div>
-<div class="stat"><strong id="percent">0%</strong><span>Progress</span></div>
-</div>
-
-<h2>Choose a challenge</h2>
-<div class="filters">
-<button class="active" data-filter="All">All</button>
-<button data-filter="Python">Python</button>
-<button data-filter="Communication">Communication</button>
-</div>
-<div id="challengeList" class="challenge-list"></div>
-
-<section class="card" id="workspace">
-<div class="tag">YOUR WORKSPACE</div>
-<h2 id="taskTitle">Select a challenge</h2>
-<p id="taskPrompt" class="muted">Choose a challenge above to begin.</p>
-
-<label for="studentName">Your name</label>
-<input id="studentName" maxlength="50" placeholder="Enter your name">
-
-<div id="pythonWorkspace">
-<label for="code">Python code editor</label>
-<textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off">print("Hello, SkillProof India!")</textarea>
-<div class="actions">
-<button id="runBtn">▶ Run Python</button>
-<button id="resetCode" class="secondary">Reset example</button>
-</div>
-<p class="note">The first run downloads the Python runtime. This may take a little time.</p>
-<div class="panel">
-<div class="panelhead"><span>OUTPUT</span><span id="runTime"></span></div>
-<pre id="output">Your program output will appear here.</pre>
-</div>
-<div class="panel">
-<div class="panelhead"><span>ERROR DETAILS</span><span id="errorLine"></span></div>
-<pre id="errors">No errors reported yet.</pre>
-</div>
-<div id="errorExplanation" class="explain" aria-live="polite">
-<h3 id="explainTitle">Understand the error</h3>
-<div id="explainBody"></div>
-</div>
-<div class="actions"><button id="passBtn" disabled>Check challenge</button></div>
-<div id="pythonFeedback" class="feedback" aria-live="polite"></div>
-</div>
-
-<div id="communicationWorkspace" style="display:none">
-<label for="writtenAnswer">Your written answer</label>
-<textarea id="writtenAnswer" maxlength="5000" placeholder="Write your answer here..."></textarea>
-<p class="note">Checks required details and common grammar patterns. This is a basic rule-based checker, not a human examiner.</p>
-<button id="communicationCheck">Check answer</button>
-<div id="communicationFeedback" class="feedback" aria-live="polite"></div>
-</div>
-</section>
-
-<h2>Your Skill Card</h2>
+<main>
 <section class="card">
-<div class="tag">SKILLPROOF INDIA · LEARNER PROFILE</div>
-<h2 id="cardName">Your name</h2>
-<div id="cardSkills"></div>
-<p class="muted" id="cardProgress">0 of 5 challenges passed</p>
-<p class="note">Progress is saved in this browser on this device. Practice checks are not verified certificates.</p>
+  <h2>Your learning dashboard</h2>
+  <p id="welcome">Welcome, learner!</p>
+  <div class="progress"><div id="progressBar"></div></div>
+  <p id="progressText" class="small">Challenges completed: 0</p>
+  <p class="small">Your progress is saved only in this browser on this device.</p>
+  <label for="learnerName">Your name</label>
+  <input id="learnerName" placeholder="Enter your name">
+  <button id="saveName">Save name</button>
+  <button class="secondary" id="resetProgress">Reset progress</button>
 </section>
 
-<div class="actions">
-<button id="shareBtn">Share Skill Card</button>
-<button id="copyBtn" class="secondary">Copy profile text</button>
-</div>
+<section class="card">
+  <h2>1. Python practice</h2>
+  <p class="small">Write Python code and run it in your browser. The first run may take a little time to load.</p>
+  <label for="pythonCode">Your Python code</label>
+  <textarea id="pythonCode" spellcheck="false">name = "Student"
+print("Hello", name)</textarea>
+  <button id="runPython">Run Python</button>
+  <div id="pythonStatus" class="status" role="status">Ready to run.</div>
+  <h3>Output</h3>
+  <pre id="pythonOutput">Your program output will appear here.</pre>
+  <h3>Beginner error help</h3>
+  <div id="pythonHelp" class="result">Run your code to see output and basic error guidance.</div>
+</section>
+
+<section class="card">
+  <h2>2. Python challenge</h2>
+  <p><b>Challenge:</b> Print the word <code>Odd</code> if the number is odd; otherwise print <code>Even</code>.</p>
+  <label for="challengeCode">Your solution</label>
+  <textarea id="challengeCode" spellcheck="false">number = 7
+if number % 2 != 0:
+    print("Odd")
+else:
+    print("Even")</textarea>
+  <button id="checkPythonChallenge">Run and check challenge</button>
+  <div id="challengeResult" class="result">Your result will appear here.</div>
+</section>
+
+<section class="card">
+  <h2>3. Communication practice</h2>
+  <p id="communicationQuestion">Introduce yourself in 3–5 sentences. Include your name, what you study and one goal.</p>
+  <label for="communicationAnswer">Your answer</label>
+  <textarea id="communicationAnswer" placeholder="Write your answer here..."></textarea>
+  <button id="checkCommunication">Check answer</button>
+  <div id="communicationResult" class="result">Complete the task to get feedback.</div>
+  <button class="secondary" id="nextCommunication">Next communication challenge</button>
+</section>
+
+<section class="card">
+  <h2>4. Basic English grammar helper</h2>
+  <p class="small">Enter a sentence to check for a few common mistakes. This is a simple rule-based helper, not a complete grammar checker.</p>
+  <label for="grammarInput">Your sentence</label>
+  <textarea id="grammarInput" placeholder="Example: I am student. He go to college."></textarea>
+  <button id="checkGrammar">Check grammar</button>
+  <h3>Suggested correction</h3>
+  <div id="grammarOutput" class="result">Your correction will appear here.</div>
+</section>
+
+<section class="card">
+  <h2>5. Your progress</h2>
+  <p id="summary">Finish a challenge to start tracking your progress.</p>
+  <p class="small">This is practice feedback, not an official certificate or verified skill assessment.</p>
+</section>
 </main>
 
-<footer>SkillProof India · Learn by doing.</footer>
+<footer>SkillProof India · Learn, practise and improve.</footer>
 
 <script>
-"use strict";
+const $ = id => document.getElementById(id);
+const STORAGE_KEY = "skillproofIndiaProgressV1";
 
-const challenges=[
-{id:"py1",cat:"Python",title:"Variables & calculations",prompt:"Store a name and age in variables, then print a sentence containing both. Expected output: My name is Akshay and I am 20 years old.",example:'name = "Akshay"\nage = 20\nprint("My name is", name, "and I am", age, "years old.")',expected:"My name is Akshay and I am 20 years old.",hint:"Create name and age variables and print a sentence containing both."},
-{id:"py2",cat:"Python",title:"Even or odd?",prompt:"Check whether number 7 is even or odd. Expected output: Odd.",example:'number = 7\n\nif number % 2 == 0:\n    print("Even")\nelse:\n    print("Odd")',expected:"Odd",hint:"Use number % 2 == 0, then print Even or Odd in the correct branch."},
-{id:"py3",cat:"Python",title:"Find the largest number",prompt:"Compare a = 12, b = 25 and c = 18. Print the largest number. Expected output: 25.",example:"a = 12\nb = 25\nc = 18\n\nif a >= b and a >= c:\n    print(a)\nelif b >= a and b >= c:\n    print(b)\nelse:\n    print(c)",expected:"25",hint:"Compare all three numbers and print the largest."},
-{id:"co1",cat:"Communication",title:"Introduce yourself",prompt:"Write at least four sentences about your interests, a skill you are learning and a personal goal.",hint:"Mention an interest, something you are learning, and a goal."},
-{id:"co2",cat:"Communication",title:"Explain a problem clearly",prompt:"Write a professional message describing a project problem, what you tried and what help you need.",hint:"State the problem, describe what you tried, and clearly ask for help."}
+let progress = {name:"",completed:[],communicationIndex:0};
+let pyodideInstance = null;
+let pyodideLoading = null;
+
+const communicationTasks = [
+  "Introduce yourself in 3–5 sentences. Include your name, what you study and one goal.",
+  "Explain a problem clearly. Describe what happened, what you tried and what help you need.",
+  "Describe a project idea. Explain what it does, who it helps and why it is useful.",
+  "Explain one skill you want to learn and how you plan to practise it."
 ];
 
-const $=id=>document.getElementById(id);
-
-function readStore(key,fallback){
- try{
-  const value=JSON.parse(localStorage.getItem(key));
-  return value===null?fallback:value;
- }catch(e){return fallback;}
+function loadProgress(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+    progress.name = saved.name || "";
+    progress.completed = Array.isArray(saved.completed) ? saved.completed : [];
+    progress.communicationIndex = Number(saved.communicationIndex) || 0;
+  }catch(error){
+    progress = {name:"",completed:[],communicationIndex:0};
+  }
 }
 
-let pyodide=null;
-let pythonLoading=null;
-let selected=null;
-let filter="All";
-let busy=false;
-let passed=readStore("sp_passed",[]);
-let answers=readStore("sp_answers",{});
-
-if(!Array.isArray(passed))passed=[];
-if(!answers||typeof answers!=="object"||Array.isArray(answers))answers={};
-
-function saveStore(){
- try{
-  localStorage.setItem("sp_passed",JSON.stringify(passed));
-  localStorage.setItem("sp_answers",JSON.stringify(answers));
-  localStorage.setItem("sp_name",$("studentName").value.trim());
- }catch(e){}
+function saveProgress(){
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(progress));
+  }catch(error){
+    console.warn("Progress could not be saved on this device.");
+  }
+  updateDashboard();
 }
 
-function feedback(id,message,ok){
- $(id).className="feedback "+(ok?"good":"bad");
- $(id).textContent=message;
+function markCompleted(task){
+  if(!progress.completed.includes(task)){
+    progress.completed.push(task);
+  }
+  saveProgress();
 }
 
-function clearFeedback(id){
- $(id).className="feedback";
- $(id).textContent="";
+function updateDashboard(){
+  $("welcome").textContent = progress.name
+    ? "Welcome, " + progress.name + "!"
+    : "Welcome, learner!";
+
+  $("learnerName").value = progress.name;
+
+  const total = 3;
+  const done = Math.min(progress.completed.length,total);
+  $("progressBar").style.width = (done / total * 100) + "%";
+  $("progressText").textContent =
+    "Challenges completed: " + progress.completed.length;
+
+  $("summary").textContent = progress.completed.length
+    ? "Completed activities: " + progress.completed.join(", ")
+    : "Finish a challenge to start tracking your progress.";
+
+  $("communicationQuestion").textContent =
+    communicationTasks[progress.communicationIndex % communicationTasks.length];
 }
 
-function renderChallenges(){
- const list=$("challengeList");
- list.replaceChildren();
-
- challenges.filter(t=>filter==="All"||t.cat===filter).forEach(t=>{
-  const el=document.createElement("article");
-  el.className="challenge";
-
-  const badge=document.createElement("span");
-  badge.className="badge";
-  badge.textContent=passed.includes(t.id)?"✓ Passed":"Not passed";
-
-  const tag=document.createElement("div");
-  tag.className="tag";
-  tag.textContent=t.cat;
-
-  const heading=document.createElement("h3");
-  heading.textContent=t.title;
-
-  const p=document.createElement("p");
-  p.textContent=t.prompt;
-
-  const button=document.createElement("button");
-  button.textContent="Open challenge";
-  button.className=passed.includes(t.id)?"secondary":"";
-  button.addEventListener("click",()=>chooseChallenge(t.id));
-
-  el.append(badge,tag,heading,p,button);
-  list.appendChild(el);
- });
-
- updateCard();
-}
-
-function chooseChallenge(id){
- selected=challenges.find(t=>t.id===id);
- if(!selected)return;
-
- $("taskTitle").textContent=selected.title;
- $("taskPrompt").textContent=selected.prompt;
- $("pythonWorkspace").style.display=selected.cat==="Python"?"block":"none";
- $("communicationWorkspace").style.display=selected.cat==="Communication"?"block":"none";
-
- if(selected.cat==="Python"){
-  $("code").value=answers[id]||selected.example;
-  $("output").textContent="Your program output will appear here.";
-  $("errors").textContent="No errors reported yet.";
-  $("errorLine").textContent="";
-  $("runTime").textContent="";
-  $("errorExplanation").style.display="none";
-  clearFeedback("pythonFeedback");
-  $("passBtn").disabled=!pyodide;
- }else{
-  $("writtenAnswer").value=answers[id]||"";
-  clearFeedback("communicationFeedback");
- }
-
- $("workspace").scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-function updateCard(){
- $("cardName").textContent=$("studentName").value.trim()||"Your name";
- $("passedCount").textContent=passed.length;
- $("total").textContent=challenges.length;
- $("percent").textContent=Math.round(passed.length/challenges.length*100)+"%";
- $("cardProgress").textContent=passed.length+" of "+challenges.length+" challenges passed";
-
- const box=$("cardSkills");
- box.replaceChildren();
- const done=challenges.filter(t=>passed.includes(t.id));
-
- if(!done.length){
-  const p=document.createElement("span");
-  p.className="pill";
-  p.textContent="No challenges passed yet";
-  box.appendChild(p);
- }
-
- done.forEach(t=>{
-  const p=document.createElement("span");
-  p.className="pill";
-  p.textContent=t.cat+": "+t.title;
-  box.appendChild(p);
- });
-}
-
-document.querySelectorAll("[data-filter]").forEach(button=>{
- button.addEventListener("click",()=>{
-  filter=button.dataset.filter;
-  document.querySelectorAll("[data-filter]").forEach(item=>{
-   item.classList.toggle("active",item===button);
-  });
-  renderChallenges();
- });
+$("saveName").addEventListener("click",()=>{
+  progress.name = $("learnerName").value.trim();
+  saveProgress();
+  $("welcome").textContent = progress.name
+    ? "Welcome, " + progress.name + "!"
+    : "Welcome, learner!";
 });
 
-async function initializePython(){
- if(pyodide)return true;
- if(pythonLoading)return pythonLoading;
+$("resetProgress").addEventListener("click",()=>{
+  if(confirm("Reset saved name and progress on this device?")){
+    progress = {name:"",completed:[],communicationIndex:0};
+    saveProgress();
+    $("communicationResult").textContent = "Progress reset.";
+    $("challengeResult").textContent = "Your result will appear here.";
+  }
+});
 
- pythonLoading=(async()=>{
-  $("runtimeStatus").textContent="Loading Python...";
-  $("runBtn").disabled=true;
-  $("runBtn").textContent="Loading Python...";
+async function getPyodide(){
+  if(pyodideInstance) return pyodideInstance;
+  if(pyodideLoading) return pyodideLoading;
+
+  pyodideLoading = (async()=>{
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js";
+
+    await new Promise((resolve,reject)=>{
+      script.onload = resolve;
+      script.onerror = ()=>reject(new Error(
+        "Python engine could not load. Check your internet connection and try again."
+      ));
+      document.head.appendChild(script);
+    });
+
+    pyodideInstance = await loadPyodide();
+    return pyodideInstance;
+  })();
 
   try{
-   if(typeof loadPyodide!=="function"){
-    await new Promise((resolve,reject)=>{
-     const script=document.createElement("script");
-     script.src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js";
-     script.onload=resolve;
-     script.onerror=()=>reject(new Error("Python download failed. Check your internet connection."));
-     document.head.appendChild(script);
-    });
-   }
-
-   if(typeof loadPyodide!=="function"){
-    throw new Error("Python runtime did not load. Refresh and try again.");
-   }
-
-   pyodide=await loadPyodide();
-   $("runtimeStatus").textContent="Python ready ✓";
-   $("passBtn").disabled=false;
-   return true;
+    return await pyodideLoading;
   }catch(error){
-   $("runtimeStatus").textContent="Python unavailable";
-   $("errors").textContent=String(error);
-   feedback("pythonFeedback","Python could not load. Check your internet connection, then refresh and retry.",false);
-   return false;
-  }finally{
-   $("runBtn").disabled=false;
-   $("runBtn").textContent="▶ Run Python";
-   pythonLoading=null;
+    pyodideLoading = null;
+    throw error;
   }
- })();
-
- return pythonLoading;
 }
 
-function explainError(message){
- const lower=message.toLowerCase();
- let problem="Python could not run your code.";
- let why="Check the traceback and line number. The reported line may not be the original cause.";
- let fix="Check spelling, brackets, quotes, colons and indentation.";
+async function executePython(code,outputElement,statusElement,helpElement){
+  outputElement.textContent = "";
+  statusElement.textContent = "Loading Python and running your code...";
 
- if(lower.includes("syntaxerror")){
-  problem="There is a Python syntax mistake.";
-  why="Python requires exact syntax for operators, brackets, quotes and statement structure.";
+  try{
+    const py = await getPyodide();
+    let captured = "";
 
-  if(/cannot assign to expression|maybe you meant '=='|invalid syntax/i.test(message)){
-   problem="You may have used = instead of ==.";
-   why="A single = assigns a value. Double equals == compares two values.";
-   fix="if number % 2 == 0:\n    print('Even')";
-  }else if(lower.includes("never closed")||lower.includes("unterminated")){
-   problem="A quote or bracket may be missing.";
-   why="Make sure every opening quote or bracket is closed.";
-   fix='print("Hello")';
+    py.setStdout({batched: text => { captured += text + "\n"; }});
+    py.setStderr({batched: text => { captured += text + "\n"; }});
+
+    await py.runPythonAsync(code);
+
+    outputElement.textContent = captured.trimEnd() || "(No output. Try using print().)";
+    statusElement.textContent = "Code executed.";
+    helpElement.textContent = "No Python exception was reported. Check your output to confirm the result.";
+    return {ok:true,output:captured.trimEnd()};
+  }catch(error){
+    const message = String(error);
+    outputElement.textContent = message;
+    statusElement.textContent = "Python reported an error.";
+    helpElement.textContent = explainPythonError(message);
+    return {ok:false,output:message};
   }
- }else if(lower.includes("indentationerror")||lower.includes("taberror")){
-  problem="Python indentation error.";
-  why="Use consistent indentation, commonly four spaces inside a block.";
-  fix="if number > 0:\n    print('Positive')";
- }else if(lower.includes("nameerror")){
-  problem="Variable or function name not defined.";
-  why="Check spelling and assign the variable before using it.";
-  fix="score = 10\nprint(score)";
- }else if(lower.includes("typeerror")){
-  problem="Incompatible data types.";
-  why="For example, adding text and a number directly may fail.";
-  fix="age = 20\nprint('Age:', age)";
- }else if(lower.includes("zerodivisionerror")){
-  problem="Division by zero.";
-  why="A number cannot be divided by zero.";
-  fix="Check that the divisor is not zero before dividing.";
- }else if(lower.includes("indexerror")){
-  problem="List index does not exist.";
-  why="List positions start at 0 and must be within the list.";
-  fix="items = ['a', 'b']\nprint(items[0])";
- }else if(lower.includes("keyerror")){
-  problem="Dictionary key not found.";
-  why="Check the exact key or use .get() if it may be missing.";
-  fix="student = {'name': 'Akshay'}\nprint(student.get('name'))";
- }else if(lower.includes("valueerror")){
-  problem="Invalid value for this operation.";
-  why="Check the value's format and expected type.";
-  fix="Check input before converting it to a number.";
- }else if(lower.includes("modulenotfounderror")||lower.includes("importerror")){
-  problem="Python could not load a module.";
-  why="The module may not be available in this browser runtime.";
-  fix="Check the module name and runtime support.";
- }
-
- const match=message.match(/File "<exec>", line (\d+)/)||message.match(/line (\d+)/);
- $("errorLine").textContent=match?"Check line "+match[1]:"Traceback";
- $("explainTitle").textContent=problem;
- $("explainBody").replaceChildren();
-
- const p=document.createElement("p");
- p.textContent=why;
- const strong=document.createElement("strong");
- strong.textContent="Possible fix";
- const code=document.createElement("code");
- code.className="fix";
- code.textContent=fix;
- const raw=document.createElement("p");
- raw.className="note";
- raw.textContent="Python says: "+message.split("\n").filter(Boolean).slice(-1)[0];
-
- $("explainBody").append(p,strong,code,raw);
- $("errorExplanation").style.display="block";
 }
 
-async function executeCode(){
- if(busy)return;
- if(!await initializePython())return;
-
- busy=true;
- $("runBtn").disabled=true;
- $("passBtn").disabled=true;
- $("output").textContent="";
- $("errors").textContent="No errors reported yet.";
- $("errorExplanation").style.display="none";
- $("errorLine").textContent="";
- let output="";
-
- try{
-  pyodide.setStdout({batched:s=>{output+=s+"\n";}});
-  pyodide.setStderr({batched:s=>{}});
-  await pyodide.runPythonAsync($("code").value);
-  $("output").textContent=output.trim()||"Program ran successfully but produced no output.";
-  $("runTime").textContent="Finished";
-  feedback("pythonFeedback","Code executed. Review the output, then check the challenge.",true);
- }catch(error){
-  $("errors").textContent=String(error);
-  explainError(String(error));
-  $("runTime").textContent="Failed";
-  feedback("pythonFeedback","Python found an error. Read the explanation, fix your code and run it again.",false);
- }finally{
-  busy=false;
-  $("runBtn").disabled=false;
-  $("runBtn").textContent="▶ Run Python";
-  $("passBtn").disabled=!pyodide;
- }
+function explainPythonError(message){
+  if(/SyntaxError/i.test(message)){
+    return "SyntaxError: check spelling, brackets, colons, quotation marks and indentation.";
+  }
+  if(/NameError/i.test(message)){
+    return "NameError: check whether every variable or function name is defined and spelled correctly.";
+  }
+  if(/IndentationError/i.test(message)){
+    return "IndentationError: check the spaces at the beginning of each line in your code.";
+  }
+  if(/TypeError/i.test(message)){
+    return "TypeError: check whether the values and operations are compatible.";
+  }
+  if(/ZeroDivisionError/i.test(message)){
+    return "ZeroDivisionError: a number cannot be divided by zero.";
+  }
+  return "Read the error message above. This helper recognises only some common Python errors.";
 }
 
-$("runBtn").addEventListener("click",executeCode);
-
-$("passBtn").addEventListener("click",async()=>{
- if(!selected||selected.cat!=="Python"||busy)return;
-
- if(!$("studentName").value.trim()){
-  alert("Enter your name first.");
-  return;
- }
-
- if(!await initializePython())return;
-
- busy=true;
- $("passBtn").disabled=true;
- let output="";
-
- try{
-  pyodide.setStdout({batched:s=>{output+=s+"\n";}});
-  pyodide.setStderr({batched:s=>{}});
-  await pyodide.runPythonAsync($("code").value);
-  output=output.trim();
-  answers[selected.id]=$("code").value;
-
-  if(output===selected.expected){
-   if(!passed.includes(selected.id))passed.push(selected.id);
-   feedback("pythonFeedback","✓ Challenge passed! Actual output matches: "+selected.expected,true);
-  }else{
-   passed=passed.filter(id=>id!==selected.id);
-   feedback("pythonFeedback","Not passed yet. Your output: "+(output||"(no output)")+". Expected: "+selected.expected+". "+selected.hint,false);
-  }
-
-  saveStore();
-  renderChallenges();
- }catch(error){
-  $("errors").textContent=String(error);
-  explainError(String(error));
-  feedback("pythonFeedback","Fix the Python error before checking the challenge.",false);
- }finally{
-  busy=false;
-  $("passBtn").disabled=!pyodide;
- }
+$("runPython").addEventListener("click",async()=>{
+  await executePython(
+    $("pythonCode").value,
+    $("pythonOutput"),
+    $("pythonStatus"),
+    $("pythonHelp")
+  );
 });
 
-$("resetCode").addEventListener("click",()=>{
- if(!selected||selected.cat!=="Python")return;
- $("code").value=selected.example;
- $("output").textContent="Your program output will appear here.";
- $("errors").textContent="No errors reported yet.";
- $("errorLine").textContent="";
- $("runTime").textContent="";
- $("errorExplanation").style.display="none";
- clearFeedback("pythonFeedback");
+$("checkPythonChallenge").addEventListener("click",async()=>{
+  const result = await executePython(
+    $("challengeCode").value,
+    $("pythonOutput"),
+    $("pythonStatus"),
+    $("pythonHelp")
+  );
+
+  if(!result.ok){
+    $("challengeResult").textContent = "Not passed: fix the Python error and try again.";
+    return;
+  }
+
+  if(result.output.trim() === "Odd" || result.output.trim() === "Even"){
+    $("challengeResult").textContent =
+      "Passed! Your program printed " + result.output.trim() + ".";
+    markCompleted("Python challenge");
+  }else{
+    $("challengeResult").textContent =
+      "Not passed yet. Expected the output to be exactly Odd or Even.";
+  }
+});
+
+$("checkCommunication").addEventListener("click",()=>{
+  const answer = $("communicationAnswer").value.trim();
+  const words = answer.split(/\s+/).filter(Boolean);
+  const task = progress.communicationIndex % communicationTasks.length;
+
+  if(words.length < 8){
+    $("communicationResult").textContent =
+      "Not passed yet. Add more detail. Aim for at least 8 words and answer the task clearly.";
+    return;
+  }
+
+  const lower = answer.toLowerCase();
+  let checks = 0;
+
+  if(task === 0){
+    if(/\b(i am|i'm|my name)\b/.test(lower)) checks++;
+    if(/\b(study|student|college|learning)\b/.test(lower)) checks++;
+    if(/\b(want|goal|hope|plan|aim)\b/.test(lower)) checks++;
+  }else if(task === 1){
+    if(/\b(problem|issue|error|not working|failed)\b/.test(lower)) checks++;
+    if(/\b(tried|try|checked|restarted|attempted)\b/.test(lower)) checks++;
+    if(/\b(help|need|because|when|but)\b/.test(lower)) checks++;
+  }else if(task === 2){
+    if(/\b(project|app|website|idea|tool)\b/.test(lower)) checks++;
+    if(/\b(help|useful|helps|users|people|students)\b/.test(lower)) checks++;
+    if(/\b(because|so that|will|can)\b/.test(lower)) checks++;
+  }else{
+    if(/\b(learn|skill|improve|practise|practice)\b/.test(lower)) checks++;
+    if(/\b(plan|daily|week|every day|will)\b/.test(lower)) checks++;
+    if(/\b(because|goal|want|help)\b/.test(lower)) checks++;
+  }
+
+  if(checks >= 2){
+    $("communicationResult").textContent =
+      "Passed the basic checklist! You answered with enough detail and included relevant points. This is an automated practice check, not a human assessment.";
+    markCompleted("Communication challenge " + (task + 1));
+  }else{
+    $("communicationResult").textContent =
+      "Not passed yet. Add specific details that answer the task. The checker looks for a few keywords, so it may miss good answers too.";
+  }
+});
+
+$("nextCommunication").addEventListener("click",()=>{
+  progress.communicationIndex =
+    (progress.communicationIndex + 1) % communicationTasks.length;
+  $("communicationAnswer").value = "";
+  $("communicationResult").textContent = "Write your answer to the new task.";
+  saveProgress();
 });
 
 function checkGrammar(text){
- const issues=[];
- const rules=[
-  [/\bI am student\b/i,"I am a student","A singular countable noun usually needs an article such as 'a'."],
-  [/\bHe go\b/i,"He goes","Use 'goes' with he in the present simple."],
-  [/\bShe go\b/i,"She goes","Use 'goes' with she in the present simple."],
-  [/\bHe don't\b/i,"He doesn't","Use 'doesn't' with he."],
-  [/\bShe don't\b/i,"She doesn't","Use 'doesn't' with she."],
-  [/\bThey was\b/i,"They were","Use 'were' with they."],
-  [/\bWe was\b/i,"We were","Use 'were' with we."],
-  [/\bI has\b/i,"I have","Use 'have' with I."],
-  [/\bHe have\b/i,"He has","Use 'has' with he."],
-  [/\bShe have\b/i,"She has","Use 'has' with she."],
-  [/\bI goed\b/i,"I went","The past tense of 'go' is 'went'."],
-  [/\byour welcome\b/i,"you're welcome","'You're' means 'you are'; 'your' shows possession."],
-  [/\btheir is\b/i,"there is","Use 'there is' to indicate something exists."],
-  [/\bI am agree\b/i,"I agree","Say 'I agree', not 'I am agree'."],
-  [/\bmore better\b/i,"better","'Better' is already a comparative form."],
-  [/\bdoesn't goes\b/i,"doesn't go","Use the base verb after 'doesn't'."],
-  [/\bdidn't went\b/i,"didn't go","Use the base verb after 'didn't'."]
- ];
+  let corrected = text;
+  const explanations = [];
 
- for(const [pattern,correct,reason] of rules){
-  const match=text.match(pattern);
-  if(match){
-   issues.push({wrong:match[0],correct,reason});
+  const rules = [
+    [/\bI am student\b/gi,"I am a student","Use 'a' before a singular countable noun such as 'student'."],
+    [/\bHe go\b/gi,"He goes","With he, she or it in the present simple, use 'goes'."],
+    [/\bShe go\b/gi,"She goes","With he, she or it in the present simple, use 'goes'."],
+    [/\bIt go\b/gi,"It goes","With he, she or it in the present simple, use 'goes'."],
+    [/\bI has\b/gi,"I have","Use 'have' with I."],
+    [/\bYou has\b/gi,"You have","Use 'have' with you."],
+    [/\bWe has\b/gi,"We have","Use 'have' with we."],
+    [/\bThey has\b/gi,"They have","Use 'have' with they."],
+    [/\bHe have\b/gi,"He has","Use 'has' with he."],
+    [/\bShe have\b/gi,"She has","Use 'has' with she."],
+    [/\bIt have\b/gi,"It has","Use 'has' with it."],
+    [/\bMy project are\b/gi,"My project is","'Project' is singular, so use 'is' instead of 'are'."],
+    [/\bMy projects is\b/gi,"My projects are","'Projects' is plural, so use 'are'."],
+    [/\bI didn't tried\b/gi,"I didn't try","After 'didn't', use the base form 'try'."],
+    [/\bI didn't went\b/gi,"I didn't go","After 'didn't', use the base form 'go'."],
+    [/\bI didn't knew\b/gi,"I didn't know","After 'didn't', use the base form 'know'."],
+    [/\bPlease helps me\b/gi,"Please help me","Use the base form 'help' after 'please'."],
+    [/\bHe don't\b/gi,"He doesn't","Use 'doesn't' with he, she or it."],
+    [/\bShe don't\b/gi,"She doesn't","Use 'doesn't' with he, she or it."],
+    [/\bI is\b/gi,"I am","Use 'am' with I."],
+    [/\bThey is\b/gi,"They are","Use 'are' with they."],
+    [/\bWe is\b/gi,"We are","Use 'are' with we."]
+  ];
+
+  for(const [pattern,replacement,explanation] of rules){
+    if(pattern.test(corrected)){
+      pattern.lastIndex = 0;
+      corrected = corrected.replace(pattern,replacement);
+      explanations.push(explanation);
+    }
+    pattern.lastIndex = 0;
   }
- }
 
- if(/\bi\b/.test(text)){
-  issues.push({
-   wrong:"i",
-   correct:"I",
-   reason:"The pronoun 'I' is always capitalized."
-  });
- }
-
- if(text.trim()&&!/[.!?]["']?$/.test(text.trim())){
-  issues.push({
-   wrong:"Missing ending punctuation",
-   correct:text.trim().replace(/[.!?]*$/,"")+".",
-   reason:"Finish your answer with suitable punctuation."
-  });
- }
-
- return issues;
+  return {corrected,explanations};
 }
 
-function getCommunicationChecks(answer){
- const lower=answer.toLowerCase();
- const sentences=answer.split(/[.!?]+/).map(s=>s.trim()).filter(Boolean);
- const missing=[];
+$("checkGrammar").addEventListener("click",()=>{
+  const input = $("grammarInput").value.trim();
 
- if(selected.id==="co1"){
-  if(sentences.length<4)missing.push("Write at least four sentences.");
-  if(!/\b(interest|interests|enjoy|enjoys|like|likes|hobby|hobbies|love)\b/i.test(answer)){
-   missing.push("Mention your interests or hobbies.");
+  if(!input){
+    $("grammarOutput").textContent = "Please enter a sentence first.";
+    return;
   }
-  if(!/\b(learn|learning|study|studying|practice|practising|practicing|developing|improving)\b/i.test(answer)){
-   missing.push("Mention a skill you are learning.");
+
+  const result = checkGrammar(input);
+
+  if(result.explanations.length){
+    $("grammarOutput").textContent =
+      "Suggested correction:\n" + result.corrected +
+      "\n\nWhy:\n- " + result.explanations.join("\n- ") +
+      "\n\nNote: This basic checker catches only selected patterns.";
+  }else{
+    $("grammarOutput").textContent =
+      "No supported mistake was detected by this basic checker.\n\nThat does not guarantee the sentence is grammatically perfect.";
   }
-  if(!/\b(goal|aim|want to|hope to|plan to|future|improve|become)\b/i.test(answer)){
-   missing.push("Mention a personal goal.");
-  }
- }else{
-  if(!/\b(problem|issue|error|bug|difficulty|not working|doesn't work|does not work|failed|failure)\b/i.test(lower)){
-   missing.push("Clearly describe the problem.");
-  }
-  if(!/\b(tried|attempted|already|tested|checked|restarted|refreshed|investigated|looked)\b/i.test(lower)){
-   missing.push("Explain what you already tried.");
-  }
-  if(!/\b(help|please|could you|can you|would you|assist|support|advice|suggest)\b/i.test(lower)){
-   missing.push("Clearly ask for help.");
-  }
-  if(sentences.length<2)missing.push("Use at least two sentences.");
- }
-
- return missing;
-}
-
-$("communicationCheck").addEventListener("click",()=>{
- if(!selected||selected.cat!=="Communication")return;
-
- if(!$("studentName").value.trim()){
-  alert("Enter your name first.");
-  return;
- }
-
- const answer=$("writtenAnswer").value.trim();
- if(!answer){
-  feedback("communicationFeedback","Please write an answer first.",false);
-  return;
- }
-
- const missing=getCommunicationChecks(answer);
- const grammar=checkGrammar(answer);
- const box=$("communicationFeedback");
-
- box.replaceChildren();
- box.className="feedback "+(missing.length?"bad":"good");
-
- const heading=document.createElement("strong");
- heading.textContent=missing.length
-  ?"Not passed yet. Add the missing details."
-  :"Answer passed! Your response includes the requested points.";
- box.appendChild(heading);
-
- if(missing.length){
-  const list=document.createElement("ul");
-  missing.forEach(message=>{
-   const li=document.createElement("li");
-   li.textContent=message;
-   list.appendChild(li);
-  });
-  box.appendChild(list);
- }
-
- const title=document.createElement("h3");
- title.textContent="Grammar and writing feedback";
- box.appendChild(title);
-
- if(grammar.length){
-  grammar.forEach(issue=>{
-   const item=document.createElement("div");
-   item.className="grammar-item";
-
-   const wrong=document.createElement("p");
-   wrong.className="wrong";
-   wrong.textContent="Check: "+issue.wrong;
-
-   const correct=document.createElement("p");
-   correct.className="correct";
-   correct.textContent="Suggested correction: "+issue.correct;
-
-   const reason=document.createElement("p");
-   reason.className="reason";
-   reason.textContent=issue.reason;
-
-   item.append(wrong,correct,reason);
-   box.appendChild(item);
-  });
- }else{
-  const p=document.createElement("p");
-  p.textContent="No common grammar mistakes detected. This basic checker may miss other errors.";
-  box.appendChild(p);
- }
-
- if(!missing.length){
-  if(!passed.includes(selected.id))passed.push(selected.id);
- }else{
-  passed=passed.filter(id=>id!==selected.id);
- }
-
- answers[selected.id]=answer;
- saveStore();
- renderChallenges();
 });
 
-$("studentName").value=readStore("sp_name","");
-
-$("studentName").addEventListener("input",()=>{
- saveStore();
- updateCard();
-});
-
-$("writtenAnswer").addEventListener("input",()=>{
- if(selected&&selected.cat==="Communication"){
-  answers[selected.id]=$("writtenAnswer").value;
-  saveStore();
- }
-});
-
-$("code").addEventListener("input",()=>{
- if(selected&&selected.cat==="Python"){
-  answers[selected.id]=$("code").value;
-  saveStore();
- }
-});
-
-$("copyBtn").addEventListener("click",async()=>{
- const name=$("studentName").value.trim()||"Learner";
- const done=challenges.filter(t=>passed.includes(t.id));
- const profile=name+" — SkillProof India\n"+
-  done.length+" of "+challenges.length+" challenges passed\n"+
-  (done.map(t=>t.cat+": "+t.title).join("\n")||"No challenges passed yet");
-
- try{
-  await navigator.clipboard.writeText(profile);
-  alert("Profile text copied!");
- }catch(e){
-  prompt("Copy your profile text:",profile);
- }
-});
-
-$("shareBtn").addEventListener("click",async()=>{
- const name=$("studentName").value.trim()||"Learner";
- const profile=name+" completed "+passed.length+" of "+challenges.length+
-  " SkillProof India practice challenges.";
-
- if(navigator.share){
-  try{
-   await navigator.share({
-    title:"My SkillProof India Skill Card",
-    text:profile
-   });
-  }catch(e){}
- }else{
-  try{
-   await navigator.clipboard.writeText(profile);
-   alert("Skill Card summary copied!");
-  }catch(e){
-   prompt("Copy your Skill Card summary:",profile);
-  }
- }
-});
-
-renderChallenges();
+loadProgress();
+updateDashboard();
 </script>
 </body>
 </html>
-
