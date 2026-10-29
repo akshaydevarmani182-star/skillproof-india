@@ -489,3 +489,233 @@ $("resetCode").addEventListener("click",()=>{
  if(!selected||selected.cat!=="Python")return;
  $("code").value=selected.example;
  $("output").textContent="Your program output will app
+  
+ear here.";
+ $("errors").textContent="No errors reported yet.";
+ $("errorLine").textContent="";
+ $("runTime").textContent="";
+ $("errorExplanation").style.display="none";
+ clearFeedback("pythonFeedback");
+});
+
+function checkGrammar(text){
+ const issues=[];
+ const rules=[
+  [/\bI am student\b/i,"I am a student","A singular countable noun usually needs an article such as 'a'."],
+  [/\bHe go\b/i,"He goes","Use 'goes' with he in the present simple."],
+  [/\bShe go\b/i,"She goes","Use 'goes' with she in the present simple."],
+  [/\bHe don't\b/i,"He doesn't","Use 'doesn't' with he."],
+  [/\bShe don't\b/i,"She doesn't","Use 'doesn't' with she."],
+  [/\bThey was\b/i,"They were","Use 'were' with they."],
+  [/\bWe was\b/i,"We were","Use 'were' with we."],
+  [/\bI has\b/i,"I have","Use 'have' with I."],
+  [/\bHe have\b/i,"He has","Use 'has' with he."],
+  [/\bShe have\b/i,"She has","Use 'has' with she."],
+  [/\bI goed\b/i,"I went","The past tense of 'go' is 'went'."],
+  [/\byour welcome\b/i,"you're welcome","'You're' means 'you are'; 'your' shows possession."],
+  [/\btheir is\b/i,"there is","Use 'there is' to indicate something exists."],
+  [/\bI am agree\b/i,"I agree","Say 'I agree', not 'I am agree'."],
+  [/\bmore better\b/i,"better","'Better' is already a comparative form."],
+  [/\bdoesn't goes\b/i,"doesn't go","Use the base verb after 'doesn't'."],
+  [/\bdidn't went\b/i,"didn't go","Use the base verb after 'didn't'."]
+ ];
+
+ for(const [pattern,correct,reason] of rules){
+  const match=text.match(pattern);
+  if(match){
+   issues.push({wrong:match[0],correct,reason});
+  }
+ }
+
+ if(/\bi\b/.test(text)){
+  issues.push({
+   wrong:"i",
+   correct:"I",
+   reason:"The pronoun 'I' is always capitalized."
+  });
+ }
+
+ if(text.trim()&&!/[.!?]["']?$/.test(text.trim())){
+  issues.push({
+   wrong:"Missing ending punctuation",
+   correct:text.trim().replace(/[.!?]*$/,"")+".",
+   reason:"Finish your answer with suitable punctuation."
+  });
+ }
+
+ return issues;
+}
+
+function getCommunicationChecks(answer){
+ const lower=answer.toLowerCase();
+ const sentences=answer.split(/[.!?]+/).map(s=>s.trim()).filter(Boolean);
+ const missing=[];
+
+ if(selected.id==="co1"){
+  if(sentences.length<4)missing.push("Write at least four sentences.");
+  if(!/\b(interest|interests|enjoy|enjoys|like|likes|hobby|hobbies|love)\b/i.test(answer)){
+   missing.push("Mention your interests or hobbies.");
+  }
+  if(!/\b(learn|learning|study|studying|practice|practising|practicing|developing|improving)\b/i.test(answer)){
+   missing.push("Mention a skill you are learning.");
+  }
+  if(!/\b(goal|aim|want to|hope to|plan to|future|improve|become)\b/i.test(answer)){
+   missing.push("Mention a personal goal.");
+  }
+ }else{
+  if(!/\b(problem|issue|error|bug|difficulty|not working|doesn't work|does not work|failed|failure)\b/i.test(lower)){
+   missing.push("Clearly describe the problem.");
+  }
+  if(!/\b(tried|attempted|already|tested|checked|restarted|refreshed|investigated|looked)\b/i.test(lower)){
+   missing.push("Explain what you already tried.");
+  }
+  if(!/\b(help|please|could you|can you|would you|assist|support|advice|suggest)\b/i.test(lower)){
+   missing.push("Clearly ask for help.");
+  }
+  if(sentences.length<2)missing.push("Use at least two sentences.");
+ }
+
+ return missing;
+}
+
+$("communicationCheck").addEventListener("click",()=>{
+ if(!selected||selected.cat!=="Communication")return;
+
+ if(!$("studentName").value.trim()){
+  alert("Enter your name first.");
+  return;
+ }
+
+ const answer=$("writtenAnswer").value.trim();
+ if(!answer){
+  feedback("communicationFeedback","Please write an answer first.",false);
+  return;
+ }
+
+ const missing=getCommunicationChecks(answer);
+ const grammar=checkGrammar(answer);
+ const box=$("communicationFeedback");
+
+ box.replaceChildren();
+ box.className="feedback "+(missing.length?"bad":"good");
+
+ const heading=document.createElement("strong");
+ heading.textContent=missing.length
+  ?"Not passed yet. Add the missing details."
+  :"Answer passed! Your response includes the requested points.";
+ box.appendChild(heading);
+
+ if(missing.length){
+  const list=document.createElement("ul");
+  missing.forEach(message=>{
+   const li=document.createElement("li");
+   li.textContent=message;
+   list.appendChild(li);
+  });
+  box.appendChild(list);
+ }
+
+ const title=document.createElement("h3");
+ title.textContent="Grammar and writing feedback";
+ box.appendChild(title);
+
+ if(grammar.length){
+  grammar.forEach(issue=>{
+   const item=document.createElement("div");
+   item.className="grammar-item";
+
+   const wrong=document.createElement("p");
+   wrong.className="wrong";
+   wrong.textContent="Check: "+issue.wrong;
+
+   const correct=document.createElement("p");
+   correct.className="correct";
+   correct.textContent="Suggested correction: "+issue.correct;
+
+   const reason=document.createElement("p");
+   reason.className="reason";
+   reason.textContent=issue.reason;
+
+   item.append(wrong,correct,reason);
+   box.appendChild(item);
+  });
+ }else{
+  const p=document.createElement("p");
+  p.textContent="No common grammar mistakes detected. This basic checker may miss other errors.";
+  box.appendChild(p);
+ }
+
+ if(!missing.length){
+  if(!passed.includes(selected.id))passed.push(selected.id);
+ }else{
+  passed=passed.filter(id=>id!==selected.id);
+ }
+
+ answers[selected.id]=answer;
+ saveStore();
+ renderChallenges();
+});
+
+$("studentName").value=readStore("sp_name","");
+
+$("studentName").addEventListener("input",()=>{
+ saveStore();
+ updateCard();
+});
+
+$("writtenAnswer").addEventListener("input",()=>{
+ if(selected&&selected.cat==="Communication"){
+  answers[selected.id]=$("writtenAnswer").value;
+  saveStore();
+ }
+});
+
+$("code").addEventListener("input",()=>{
+ if(selected&&selected.cat==="Python"){
+  answers[selected.id]=$("code").value;
+  saveStore();
+ }
+});
+
+$("copyBtn").addEventListener("click",async()=>{
+ const name=$("studentName").value.trim()||"Learner";
+ const done=challenges.filter(t=>passed.includes(t.id));
+ const profile=name+" — SkillProof India\n"+
+  done.length+" of "+challenges.length+" challenges passed\n"+
+  (done.map(t=>t.cat+": "+t.title).join("\n")||"No challenges passed yet");
+
+ try{
+  await navigator.clipboard.writeText(profile);
+  alert("Profile text copied!");
+ }catch(e){
+  prompt("Copy your profile text:",profile);
+ }
+});
+
+$("shareBtn").addEventListener("click",async()=>{
+ const name=$("studentName").value.trim()||"Learner";
+ const profile=name+" completed "+passed.length+" of "+challenges.length+
+  " SkillProof India practice challenges.";
+
+ if(navigator.share){
+  try{
+   await navigator.share({
+    title:"My SkillProof India Skill Card",
+    text:profile
+   });
+  }catch(e){}
+ }else{
+  try{
+   await navigator.clipboard.writeText(profile);
+   alert("Skill Card summary copied!");
+  }catch(e){
+   prompt("Copy your Skill Card summary:",profile);
+  }
+ }
+});
+
+renderChallenges();
+</script>
+</body>
+</html>
+
