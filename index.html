@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,24 +52,36 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.65 ui-monospace,Cons
 .pill{display:inline-block;padding:7px 9px;margin:5px 4px 0 0;background:#eae7ff;color:#4938c5;border-radius:20px;font-size:11px}
 .note,footer{font-size:11px;color:var(--muted);line-height:1.6}
 footer{text-align:center;padding:20px}
+.feedback h3{font-size:15px;margin:14px 0 6px}
+.feedback ul{padding-left:20px}
+.feedback li{margin:5px 0}
+.feedback .grammar-item{padding:9px;margin-top:8px;background:#fff8e5;border:1px solid #f1dfa5;border-radius:8px;color:#192039}
+.feedback .wrong{color:#a32730}
+.feedback .correct{color:#126540;font-weight:700}
+.feedback .reason{color:#70788d;font-size:12px}
 @media(min-width:650px){.challenge-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}.challenge{margin:0}}
 </style>
 </head>
 <body>
 <header>
-<nav><div class="logo">SkillProof<span> India.</span></div><div class="status" id="runtimeStatus">Python loads on demand</div></nav>
+<nav>
+<div class="logo">SkillProof<span> India.</span></div>
+<div class="status" id="runtimeStatus">Python loads on demand</div>
+</nav>
 <div class="hero">
 <div class="eyebrow">LEARN · CODE · IMPROVE</div>
 <h1>Write code.<br>Understand errors.</h1>
 <p>Practise Python, see your output, understand mistakes and build practical skills.</p>
 </div>
 </header>
+
 <main class="wrap">
 <div class="stats">
 <div class="stat"><strong id="total">5</strong><span>Challenges</span></div>
 <div class="stat"><strong id="passedCount">0</strong><span>Passed</span></div>
 <div class="stat"><strong id="percent">0%</strong><span>Progress</span></div>
 </div>
+
 <h2>Choose a challenge</h2>
 <div class="filters">
 <button class="active" data-filter="All">All</button>
@@ -76,31 +89,48 @@ footer{text-align:center;padding:20px}
 <button data-filter="Communication">Communication</button>
 </div>
 <div id="challengeList" class="challenge-list"></div>
+
 <section class="card" id="workspace">
 <div class="tag">YOUR WORKSPACE</div>
 <h2 id="taskTitle">Select a challenge</h2>
 <p id="taskPrompt" class="muted">Choose a challenge above to begin.</p>
+
 <label for="studentName">Your name</label>
 <input id="studentName" maxlength="50" placeholder="Enter your name">
+
 <div id="pythonWorkspace">
 <label for="code">Python code editor</label>
 <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off">print("Hello, SkillProof India!")</textarea>
-<div class="actions"><button id="runBtn">▶ Run Python</button><button id="resetCode" class="secondary">Reset example</button></div>
+<div class="actions">
+<button id="runBtn">▶ Run Python</button>
+<button id="resetCode" class="secondary">Reset example</button>
+</div>
 <p class="note">The first run downloads the Python runtime. This may take a little time.</p>
-<div class="panel"><div class="panelhead"><span>OUTPUT</span><span id="runTime"></span></div><pre id="output">Your program output will appear here.</pre></div>
-<div class="panel"><div class="panelhead"><span>ERROR DETAILS</span><span id="errorLine"></span></div><pre id="errors">No errors reported yet.</pre></div>
-<div id="errorExplanation" class="explain" aria-live="polite"><h3 id="explainTitle">Understand the error</h3><div id="explainBody"></div></div>
+<div class="panel">
+<div class="panelhead"><span>OUTPUT</span><span id="runTime"></span></div>
+<pre id="output">Your program output will appear here.</pre>
+</div>
+<div class="panel">
+<div class="panelhead"><span>ERROR DETAILS</span><span id="errorLine"></span></div>
+<pre id="errors">No errors reported yet.</pre>
+</div>
+<div id="errorExplanation" class="explain" aria-live="polite">
+<h3 id="explainTitle">Understand the error</h3>
+<div id="explainBody"></div>
+</div>
 <div class="actions"><button id="passBtn" disabled>Check challenge</button></div>
 <div id="pythonFeedback" class="feedback" aria-live="polite"></div>
 </div>
+
 <div id="communicationWorkspace" style="display:none">
 <label for="writtenAnswer">Your written answer</label>
 <textarea id="writtenAnswer" maxlength="5000" placeholder="Write your answer here..."></textarea>
-<p class="note">Your answer is checked against a basic checklist, not by a human examiner.</p>
+<p class="note">Checks required details and common grammar patterns. This is a basic rule-based checker, not a human examiner.</p>
 <button id="communicationCheck">Check answer</button>
 <div id="communicationFeedback" class="feedback" aria-live="polite"></div>
 </div>
 </section>
+
 <h2>Your Skill Card</h2>
 <section class="card">
 <div class="tag">SKILLPROOF INDIA · LEARNER PROFILE</div>
@@ -109,9 +139,15 @@ footer{text-align:center;padding:20px}
 <p class="muted" id="cardProgress">0 of 5 challenges passed</p>
 <p class="note">Progress is saved in this browser on this device. Practice checks are not verified certificates.</p>
 </section>
-<div class="actions"><button id="shareBtn">Share Skill Card</button><button id="copyBtn" class="secondary">Copy profile text</button></div>
+
+<div class="actions">
+<button id="shareBtn">Share Skill Card</button>
+<button id="copyBtn" class="secondary">Copy profile text</button>
+</div>
 </main>
+
 <footer>SkillProof India · Learn by doing.</footer>
+
 <script>
 "use strict";
 
@@ -124,12 +160,14 @@ const challenges=[
 ];
 
 const $=id=>document.getElementById(id);
+
 function readStore(key,fallback){
  try{
   const value=JSON.parse(localStorage.getItem(key));
   return value===null?fallback:value;
- }catch(e){return fallback}
+ }catch(e){return fallback;}
 }
+
 let pyodide=null;
 let pythonLoading=null;
 let selected=null;
@@ -153,6 +191,7 @@ function feedback(id,message,ok){
  $(id).className="feedback "+(ok?"good":"bad");
  $(id).textContent=message;
 }
+
 function clearFeedback(id){
  $(id).className="feedback";
  $(id).textContent="";
@@ -161,26 +200,34 @@ function clearFeedback(id){
 function renderChallenges(){
  const list=$("challengeList");
  list.replaceChildren();
+
  challenges.filter(t=>filter==="All"||t.cat===filter).forEach(t=>{
   const el=document.createElement("article");
   el.className="challenge";
+
   const badge=document.createElement("span");
   badge.className="badge";
   badge.textContent=passed.includes(t.id)?"✓ Passed":"Not passed";
+
   const tag=document.createElement("div");
   tag.className="tag";
   tag.textContent=t.cat;
+
   const heading=document.createElement("h3");
   heading.textContent=t.title;
+
   const p=document.createElement("p");
   p.textContent=t.prompt;
+
   const button=document.createElement("button");
   button.textContent="Open challenge";
   button.className=passed.includes(t.id)?"secondary":"";
   button.addEventListener("click",()=>chooseChallenge(t.id));
+
   el.append(badge,tag,heading,p,button);
   list.appendChild(el);
  });
+
  updateCard();
 }
 
@@ -227,6 +274,7 @@ function updateCard(){
   p.textContent="No challenges passed yet";
   box.appendChild(p);
  }
+
  done.forEach(t=>{
   const p=document.createElement("span");
   p.className="pill";
@@ -260,13 +308,13 @@ async function initializePython(){
      const script=document.createElement("script");
      script.src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js";
      script.onload=resolve;
-     script.onerror=()=>reject(new Error("Python download failed. Check your internet connection and content blocker."));
+     script.onerror=()=>reject(new Error("Python download failed. Check your internet connection."));
      document.head.appendChild(script);
     });
    }
 
    if(typeof loadPyodide!=="function"){
-    throw new Error("Python runtime did not load. Refresh the page and try again.");
+    throw new Error("Python runtime did not load. Refresh and try again.");
    }
 
    pyodide=await loadPyodide();
@@ -297,6 +345,7 @@ function explainError(message){
  if(lower.includes("syntaxerror")){
   problem="There is a Python syntax mistake.";
   why="Python requires exact syntax for operators, brackets, quotes and statement structure.";
+
   if(/cannot assign to expression|maybe you meant '=='|invalid syntax/i.test(message)){
    problem="You may have used = instead of ==.";
    why="A single = assigns a value. Double equals == compares two values.";
@@ -397,10 +446,12 @@ $("runBtn").addEventListener("click",executeCode);
 
 $("passBtn").addEventListener("click",async()=>{
  if(!selected||selected.cat!=="Python"||busy)return;
+
  if(!$("studentName").value.trim()){
   alert("Enter your name first.");
   return;
  }
+
  if(!await initializePython())return;
 
  busy=true;
@@ -421,6 +472,7 @@ $("passBtn").addEventListener("click",async()=>{
    passed=passed.filter(id=>id!==selected.id);
    feedback("pythonFeedback","Not passed yet. Your output: "+(output||"(no output)")+". Expected: "+selected.expected+". "+selected.hint,false);
   }
+
   saveStore();
   renderChallenges();
  }catch(error){
@@ -436,135 +488,4 @@ $("passBtn").addEventListener("click",async()=>{
 $("resetCode").addEventListener("click",()=>{
  if(!selected||selected.cat!=="Python")return;
  $("code").value=selected.example;
- $("output").textContent="Your program output will appear here.";
- $("errors").textContent="No errors reported yet.";
- $("errorLine").textContent="";
- $("runTime").textContent="";
- $("errorExplanation").style.display="none";
- clearFeedback("pythonFeedback");
-});
-
-$("communicationCheck").addEventListener("click",()=>{
- if(!selected||selected.cat!=="Communication")return;
-
- const answer=$("writtenAnswer").value.trim();
- if(!$("studentName").value.trim()){
-  
-alert("Enter your name first.");
-return;
-}
-
-if(!answer){
-  alert("Write your answer first.");
-  return;
-}
-
-answers[selected.id] = answer;
-
-let ok = false;
-
-if(selected.id === "co1"){
-  const sentences = answer.split(/[.!?]+/).filter(s => s.trim()).length;
-
-  ok = sentences >= 4 &&
-    /\b(interest|interested|enjoy|like|love|hobby)\b/i.test(answer) &&
-    /\b(learning|learn|studying|study|practicing|practising)\b/i.test(answer) &&
-    /\b(goal|aim|want to|hope to|plan to|aspire)\b/i.test(answer);
-}else{
-  ok = answer.length >= 60 &&
-    /\b(problem|issue|error|delay|not working|facing)\b/i.test(answer) &&
-    /\b(tried|checked|tested|attempted|reviewed)\b/i.test(answer) &&
-    /\b(help|assist|review|suggest|support|please)\b/i.test(answer);
-}
-
-if(ok){
-  if(!passed.includes(selected.id)){
-    passed.push(selected.id);
-  }
-  feedback(
-    "communicationFeedback",
-    "✓ Answer passed! Your response includes the requested points.",
-    true
-  );
-}else{
-  passed = passed.filter(id => id !== selected.id);
-  feedback(
-    "communicationFeedback",
-    "Not passed yet. Add the missing details mentioned in the challenge.",
-    false
-  );
-}
-
-saveStore();
-renderChallenges();
-});
-
-$("studentName").value = localStorage.getItem("sp_name") || "";
-
-$("studentName").addEventListener("input", () => {
-  saveStore();
-  updateCard();
-});
-
-$("writtenAnswer").addEventListener("input", () => {
-  if(selected && selected.cat === "Communication"){
-    answers[selected.id] = $("writtenAnswer").value;
-    saveStore();
-  }
-});
-
-$("code").addEventListener("input", () => {
-  if(selected && selected.cat === "Python"){
-    answers[selected.id] = $("code").value;
-    saveStore();
-  }
-});
-
-function profileText(){
-  const name = $("studentName").value.trim() || "Learner";
-  const skills = challenges
-    .filter(t => passed.includes(t.id))
-    .map(t => t.cat + ": " + t.title);
-
-  return "SkillProof India - " + name +
-    "\n" + passed.length + " of " + challenges.length + " challenges passed.\n" +
-    (skills.length ? skills.join("\n") : "No challenges passed yet.") +
-    "\nPractice progress saved on this device.";
-}
-
-$("shareBtn").addEventListener("click", async () => {
-  const text = profileText();
-
-  if(navigator.share){
-    try{
-      await navigator.share({
-        title: "My SkillProof India Card",
-        text
-      });
-    }catch(error){}
-  }else{
-    try{
-      await navigator.clipboard.writeText(text);
-      alert("Skill Card text copied!");
-    }catch(error){
-      prompt("Copy your Skill Card text:", text);
-    }
-  }
-});
-
-$("copyBtn").addEventListener("click", async () => {
-  const text = profileText();
-
-  try{
-    await navigator.clipboard.writeText(text);
-    alert("Profile text copied!");
-  }catch(error){
-    prompt("Copy your profile text:", text);
-  }
-});
-
-renderChallenges();
-</script>
-</body>
-</html>
-
+ $("output").textContent="Your program output will app
